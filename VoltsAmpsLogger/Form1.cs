@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿// REF: https://stackoverflow.com/questions/50076045/chart-auto-scroll-oscilloscope-effect
 
 using System;
@@ -21,10 +22,13 @@ using System.Text.Json.Serialization;
 using System.Windows.Forms.DataVisualization.Charting;
 using System.IO;
 
+=======
+>>>>>>> 0ae4f0228b8dd0c02d8207d7c7b3640f26c81c25
 namespace VoltsAmpsLogger
 {
     public partial class Form1 : Form
     {
+<<<<<<< HEAD
         private const int _maxReadingsBufferSize = 1024;
 
         private ComPortItem _comPortItemSelected;
@@ -521,3 +525,11 @@ namespace VoltsAmpsLogger
         public DateTime received { get; set; }
     }
 }
+=======
+        public Form1()
+        {
+            InitializeComponent();
+        }
+    }
+}
+>>>>>>> 0ae4f0228b8dd0c02d8207d7c7b3640f26c81c25

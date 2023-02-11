@@ -60,8 +60,11 @@ ina219_0.set_calibration_16V_400mA()
 ina219_1.set_calibration_16V_400mA()
 
 # ***** SETUP DISPLAY *****
+<<<<<<< HEAD
 displayio.release_displays()
 
+=======
+>>>>>>> 0ae4f0228b8dd0c02d8207d7c7b3640f26c81c25
 oled_0 = adafruit_ssd1306.SSD1306_I2C(width=128, height=64, i2c=i2c_0, reset=digitalio.DigitalInOut(board.GP13), addr=0x3d)
 oled_1 = adafruit_ssd1306.SSD1306_I2C(width=128, height=64, i2c=i2c_1, reset=digitalio.DigitalInOut(board.GP18), addr=0x3d)
 
