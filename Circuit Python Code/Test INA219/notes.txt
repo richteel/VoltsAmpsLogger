@@ -1,0 +1,15 @@
+CHANNEL 1
+Voltage (VIN+) :  0.060   V
+Voltage (VIN-) :  0.060   V
+Shunt Voltage  :  0.00001 V
+Shunt Current  :  0.0001  A
+Power Calc.    :  0.00001 W
+Power Register :  0.000   W
+
+CHANNEL 2
+Voltage (VIN+) :  5.117   V
+Voltage (VIN-) :  5.108   V
+Shunt Voltage  :  0.00943 V
+Shunt Current  :  0.0943  A
+Power Calc.    :  0.48168 W
+Power Register :  0.482   W

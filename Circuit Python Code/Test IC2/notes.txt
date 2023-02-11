@@ -1,0 +1,14 @@
+# Initial code
+Did not see displays in the scan. Only the INA219 devices
+    I2C addresses found on bus 0: ['0x40']
+    I2C addresses found on bus 1: ['0x40']
+
+# John Park has an article on speeding up the I2C Bus, which we may want here.
+https://learn.adafruit.com/todbot-circuitpython-tricks/i2c
+Difault speed is 100 kHz
+i2c = busio.I2C( board.SCL, board.SDA, frequency=200_000)
+i2c = busio.I2C( board.SCL, board.SDA, frequency=400_000)
+
+# Did not solder jumpers on OLEDs for I2C. The displays were using SPI.
+I2C addresses found on bus 0: ['0x3d', '0x40']
+I2C addresses found on bus 1: ['0x3d', '0x40']
