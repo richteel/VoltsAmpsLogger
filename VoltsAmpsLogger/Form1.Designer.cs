@@ -3,20 +3,12 @@
     partial class Form1
     {
         /// <summary>
-<<<<<<< HEAD
         /// Required designer variable.
-=======
-        ///  Required designer variable.
->>>>>>> 0ae4f0228b8dd0c02d8207d7c7b3640f26c81c25
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
         /// <summary>
-<<<<<<< HEAD
         /// Clean up any resources being used.
-=======
-        ///  Clean up any resources being used.
->>>>>>> 0ae4f0228b8dd0c02d8207d7c7b3640f26c81c25
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
@@ -31,18 +23,12 @@
         #region Windows Form Designer generated code
 
         /// <summary>
-<<<<<<< HEAD
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
-=======
-        ///  Required method for Designer support - do not modify
-        ///  the contents of this method with the code editor.
->>>>>>> 0ae4f0228b8dd0c02d8207d7c7b3640f26c81c25
         /// </summary>
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-<<<<<<< HEAD
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
@@ -399,13 +385,3 @@
     }
 }
 
-=======
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "Form1";
-        }
-
-        #endregion
-    }
-}
->>>>>>> 0ae4f0228b8dd0c02d8207d7c7b3640f26c81c25

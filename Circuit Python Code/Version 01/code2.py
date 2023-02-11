@@ -13,18 +13,20 @@ import adafruit_ssd1306
 # Import the INA219 module.
 import adafruit_ina219
 
+
 def get_ina219_info(meter):
     bus_voltage = meter.bus_voltage  # voltage on V- (load side)
     shunt_voltage = meter.shunt_voltage  # voltage between V+ and V- across the shunt
     current = meter.current  # current in mA
     power = meter.power  # power in watts
 
-    return { "VIN_IN": (bus_voltage + shunt_voltage),
+    return {"VIN_IN": (bus_voltage + shunt_voltage),
             "VIN_OUT": bus_voltage,
             "ShuntV": shunt_voltage,
             "ShuntC": (current / 1000),
             "PowerCal": (bus_voltage * (current / 1000)),
             "PowerRegister": power}
+
 
 def update_display(disp, test):
     disp.fill(0)
@@ -60,13 +62,12 @@ ina219_0.set_calibration_16V_400mA()
 ina219_1.set_calibration_16V_400mA()
 
 # ***** SETUP DISPLAY *****
-<<<<<<< HEAD
 displayio.release_displays()
 
-=======
->>>>>>> 0ae4f0228b8dd0c02d8207d7c7b3640f26c81c25
-oled_0 = adafruit_ssd1306.SSD1306_I2C(width=128, height=64, i2c=i2c_0, reset=digitalio.DigitalInOut(board.GP13), addr=0x3d)
-oled_1 = adafruit_ssd1306.SSD1306_I2C(width=128, height=64, i2c=i2c_1, reset=digitalio.DigitalInOut(board.GP18), addr=0x3d)
+oled_0 = adafruit_ssd1306.SSD1306_I2C(
+    width=128, height=64, i2c=i2c_0, reset=digitalio.DigitalInOut(board.GP13), addr=0x3d)
+oled_1 = adafruit_ssd1306.SSD1306_I2C(
+    width=128, height=64, i2c=i2c_1, reset=digitalio.DigitalInOut(board.GP18), addr=0x3d)
 
 # Make the display context
 # splash_0 = oled_0.Group()
@@ -100,7 +101,6 @@ while True:
 
         oled_test_1 = not oled_test_1
 
-    
     if time.monotonic() - powerPreviousTime >= powerInterval:
         powerPreviousTime = time.monotonic()
 
@@ -109,9 +109,8 @@ while True:
 
         # print("VIN_IN_1\tVIN_OUT_1\tShuntV_1\tShuntC_1\tPowerCal_1\tPowerRegister_1\tVIN_IN_2\tVIN_OUT_2\tShuntV_2\tShuntC_2\tPowerCal_2\tPowerRegister_2")
         print(("P\t{:.3f}\t{:.3f}\t{:.3f}\t{:.5f}\t{:.4f}\t{:.5f}\t{:.3f}\t{:.3f}" +
-                    "\t{:.3f}\t{:.5f}\t{:.4f}\t{:.5f}\t{:.3f}").format( displayPreviousTime,
-                                                                        meter_0["VIN_IN"] , meter_0["VIN_OUT"], meter_0["ShuntV"], meter_0["ShuntC"], 
-                                                                        meter_0["PowerCal"], meter_0["PowerRegister"],  
-                                                                        meter_1["VIN_IN"] , meter_1["VIN_OUT"], meter_1["ShuntV"], meter_1["ShuntC"], 
-                                                                        meter_1["PowerCal"], meter_1["PowerRegister"]))
-
+               "\t{:.3f}\t{:.5f}\t{:.4f}\t{:.5f}\t{:.3f}").format(displayPreviousTime,
+                                                                  meter_0["VIN_IN"], meter_0["VIN_OUT"], meter_0["ShuntV"], meter_0["ShuntC"],
+                                                                  meter_0["PowerCal"], meter_0["PowerRegister"],
+                                                                  meter_1["VIN_IN"], meter_1["VIN_OUT"], meter_1["ShuntV"], meter_1["ShuntC"],
+                                                                  meter_1["PowerCal"], meter_1["PowerRegister"]))

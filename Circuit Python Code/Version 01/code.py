@@ -93,13 +93,15 @@ pixels_char_w = oled_0.width/screen_w_chars
 pixels_char_h = oled_0.height/screen_h_lines
 
 displayPreviousTime = time.monotonic()
-displayInterval = 0.2    # Time in seconds
+displayInterval = 0.02    # Time in seconds
+
 update_display(oled_0, None)
 update_display(oled_1, None)
 time.sleep(3)
 
 powerPreviousTime = time.monotonic()
-powerInterval = 0.2
+powerInterval = 0.01    # Time in seconds
+
 oled_0
 
 meter_0 = get_ina219_info(ina219_0)
@@ -122,4 +124,3 @@ while True:
 
         print(json.dumps({"time": displayPreviousTime, "channel_1": meter_0, "channel_2": meter_1}))
         # print("{:0.8f}\t{:0.8f}".format(time.monotonic(), meter_1_time - meter_0_time))
-
