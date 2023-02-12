@@ -84,6 +84,7 @@ namespace VoltsAmpsLogger
                 return;
             }
 
+            // Update connected status
             bool value = _serialPort != null && _serialPort.IsOpen;
 
             if (value)
@@ -109,6 +110,9 @@ namespace VoltsAmpsLogger
                     }
                 }
             }
+
+            // Update data points
+            lblDataReceived.Text = string.Format("Received: {0} measurements", readings.Count);
         }
 
         private void ConnectToComPort()

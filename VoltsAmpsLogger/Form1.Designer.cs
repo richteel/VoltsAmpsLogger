@@ -38,28 +38,29 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveDataFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveChartImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.portToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.baudRateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.gitHubPagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lblComStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.uC_Meter2 = new VoltsAmpsLogger.UC_Meter();
+            this.uC_Meter1 = new VoltsAmpsLogger.UC_Meter();
             this.cmdStart = new System.Windows.Forms.Button();
             this.lblConnectInstruction = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.saveDataFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveFileDialogData = new System.Windows.Forms.SaveFileDialog();
-            this.saveChartImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveFileDialogChart = new System.Windows.Forms.SaveFileDialog();
-            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.gitHubPagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.uC_Meter2 = new VoltsAmpsLogger.UC_Meter();
-            this.uC_Meter1 = new VoltsAmpsLogger.UC_Meter();
+            this.lblDataReceived = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -92,6 +93,32 @@
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "&File";
             // 
+            // saveDataFileToolStripMenuItem
+            // 
+            this.saveDataFileToolStripMenuItem.Name = "saveDataFileToolStripMenuItem";
+            this.saveDataFileToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.saveDataFileToolStripMenuItem.Text = "Save &Data File";
+            this.saveDataFileToolStripMenuItem.Click += new System.EventHandler(this.saveDataFileToolStripMenuItem_Click);
+            // 
+            // saveChartImageToolStripMenuItem
+            // 
+            this.saveChartImageToolStripMenuItem.Name = "saveChartImageToolStripMenuItem";
+            this.saveChartImageToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.saveChartImageToolStripMenuItem.Text = "Save &Chart Image";
+            this.saveChartImageToolStripMenuItem.Click += new System.EventHandler(this.saveChartImageToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(163, 6);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.exitToolStripMenuItem.Text = "E&xit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
             // toolsToolStripMenuItem
             // 
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -114,10 +141,34 @@
             this.baudRateToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.baudRateToolStripMenuItem.Text = "&Baud Rate";
             // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutToolStripMenuItem,
+            this.gitHubPagesToolStripMenuItem});
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Text = "&Help";
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.aboutToolStripMenuItem.Text = "&About";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            // 
+            // gitHubPagesToolStripMenuItem
+            // 
+            this.gitHubPagesToolStripMenuItem.Name = "gitHubPagesToolStripMenuItem";
+            this.gitHubPagesToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.gitHubPagesToolStripMenuItem.Text = "&GitHub Pages";
+            this.gitHubPagesToolStripMenuItem.Click += new System.EventHandler(this.gitHubPagesToolStripMenuItem_Click);
+            // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.lblComStatus});
+            this.lblComStatus,
+            this.lblDataReceived});
             this.statusStrip1.Location = new System.Drawing.Point(0, 454);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(800, 22);
@@ -126,8 +177,10 @@
             // 
             // lblComStatus
             // 
+            this.lblComStatus.AutoSize = false;
             this.lblComStatus.Name = "lblComStatus";
-            this.lblComStatus.Size = new System.Drawing.Size(0, 17);
+            this.lblComStatus.Size = new System.Drawing.Size(150, 17);
+            this.lblComStatus.Text = "Status: Not Connected";
             // 
             // panel1
             // 
@@ -206,95 +259,6 @@
             this.chart1.TabIndex = 1;
             this.chart1.Text = "chart1";
             // 
-            // cmdStart
-            // 
-            this.cmdStart.Dock = System.Windows.Forms.DockStyle.Top;
-            this.cmdStart.Enabled = false;
-            this.cmdStart.Location = new System.Drawing.Point(3, 54);
-            this.cmdStart.Name = "cmdStart";
-            this.cmdStart.Size = new System.Drawing.Size(227, 23);
-            this.cmdStart.TabIndex = 1;
-            this.cmdStart.Text = "Start";
-            this.cmdStart.UseVisualStyleBackColor = true;
-            this.cmdStart.Click += new System.EventHandler(this.cmdStart_Click);
-            // 
-            // lblConnectInstruction
-            // 
-            this.lblConnectInstruction.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblConnectInstruction.Location = new System.Drawing.Point(3, 3);
-            this.lblConnectInstruction.Margin = new System.Windows.Forms.Padding(3);
-            this.lblConnectInstruction.Name = "lblConnectInstruction";
-            this.lblConnectInstruction.Size = new System.Drawing.Size(227, 51);
-            this.lblConnectInstruction.TabIndex = 0;
-            this.lblConnectInstruction.Text = "To get started, select a COM Port from the Tools > Port menu, then click the \"Sta" +
-    "rt\" button to acquire and display data.";
-            // 
-            // timer1
-            // 
-            this.timer1.Enabled = true;
-            this.timer1.Interval = 2000;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // saveDataFileToolStripMenuItem
-            // 
-            this.saveDataFileToolStripMenuItem.Name = "saveDataFileToolStripMenuItem";
-            this.saveDataFileToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
-            this.saveDataFileToolStripMenuItem.Text = "Save &Data File";
-            this.saveDataFileToolStripMenuItem.Click += new System.EventHandler(this.saveDataFileToolStripMenuItem_Click);
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(163, 6);
-            // 
-            // exitToolStripMenuItem
-            // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
-            this.exitToolStripMenuItem.Text = "E&xit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
-            // 
-            // saveFileDialogData
-            // 
-            this.saveFileDialogData.FileName = "ScopeData";
-            this.saveFileDialogData.Filter = "CSV file|*.csv|Tab Delimited Text file|*.txt|JSON file|*.json";
-            this.saveFileDialogData.Title = "Save Data FIle";
-            // 
-            // saveChartImageToolStripMenuItem
-            // 
-            this.saveChartImageToolStripMenuItem.Name = "saveChartImageToolStripMenuItem";
-            this.saveChartImageToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
-            this.saveChartImageToolStripMenuItem.Text = "Save &Chart Image";
-            this.saveChartImageToolStripMenuItem.Click += new System.EventHandler(this.saveChartImageToolStripMenuItem_Click);
-            // 
-            // saveFileDialogChart
-            // 
-            this.saveFileDialogChart.FileName = "ScopeImage";
-            this.saveFileDialogChart.Filter = "PNG file|*.png|JPG file|*.jpg|GIF file|*.gif|BMP file|*.bmp|TIFF file|*\'tiff";
-            // 
-            // helpToolStripMenuItem
-            // 
-            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.aboutToolStripMenuItem,
-            this.gitHubPagesToolStripMenuItem});
-            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.helpToolStripMenuItem.Text = "&Help";
-            // 
-            // aboutToolStripMenuItem
-            // 
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.aboutToolStripMenuItem.Text = "&About";
-            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
-            // 
-            // gitHubPagesToolStripMenuItem
-            // 
-            this.gitHubPagesToolStripMenuItem.Name = "gitHubPagesToolStripMenuItem";
-            this.gitHubPagesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.gitHubPagesToolStripMenuItem.Text = "&GitHub Pages";
-            this.gitHubPagesToolStripMenuItem.Click += new System.EventHandler(this.gitHubPagesToolStripMenuItem_Click);
-            // 
             // uC_Meter2
             // 
             this.uC_Meter2.channelName = "Channel 2";
@@ -326,6 +290,53 @@
             this.uC_Meter1.V_In = 0D;
             this.uC_Meter1.V_Out = 0D;
             this.uC_Meter1.V_Shunt = 0D;
+            // 
+            // cmdStart
+            // 
+            this.cmdStart.Dock = System.Windows.Forms.DockStyle.Top;
+            this.cmdStart.Enabled = false;
+            this.cmdStart.Location = new System.Drawing.Point(3, 54);
+            this.cmdStart.Name = "cmdStart";
+            this.cmdStart.Size = new System.Drawing.Size(227, 23);
+            this.cmdStart.TabIndex = 1;
+            this.cmdStart.Text = "Start";
+            this.cmdStart.UseVisualStyleBackColor = true;
+            this.cmdStart.Click += new System.EventHandler(this.cmdStart_Click);
+            // 
+            // lblConnectInstruction
+            // 
+            this.lblConnectInstruction.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblConnectInstruction.Location = new System.Drawing.Point(3, 3);
+            this.lblConnectInstruction.Margin = new System.Windows.Forms.Padding(3);
+            this.lblConnectInstruction.Name = "lblConnectInstruction";
+            this.lblConnectInstruction.Size = new System.Drawing.Size(227, 51);
+            this.lblConnectInstruction.TabIndex = 0;
+            this.lblConnectInstruction.Text = "To get started, select a COM Port from the Tools > Port menu, then click the \"Sta" +
+    "rt\" button to acquire and display data.";
+            // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 2000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // saveFileDialogData
+            // 
+            this.saveFileDialogData.FileName = "ScopeData";
+            this.saveFileDialogData.Filter = "CSV file|*.csv|Tab Delimited Text file|*.txt|JSON file|*.json";
+            this.saveFileDialogData.Title = "Save Data FIle";
+            // 
+            // saveFileDialogChart
+            // 
+            this.saveFileDialogChart.FileName = "ScopeImage";
+            this.saveFileDialogChart.Filter = "PNG file|*.png|JPG file|*.jpg|GIF file|*.gif|BMP file|*.bmp|TIFF file|*\'tiff";
+            // 
+            // lblDataReceived
+            // 
+            this.lblDataReceived.AutoSize = false;
+            this.lblDataReceived.Name = "lblDataReceived";
+            this.lblDataReceived.Size = new System.Drawing.Size(200, 17);
+            this.lblDataReceived.Text = "Received: 0 measurements";
             // 
             // Form1
             // 
@@ -382,6 +393,7 @@
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem gitHubPagesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripStatusLabel lblDataReceived;
     }
 }
 

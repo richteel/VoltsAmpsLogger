@@ -1,9 +1,45 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>VoltsAmpsLogger - Dual Channel Voltage and Current Monitor</title>
-    </head>
-    <body>
-        <h1>VoltsAmpsLogger - Dual Channel Voltage and Current Monitor</h1>
-    </body>
+<html dir="ltr" lang="en-us">
+
+<head>
+    <meta charset="utf-8" />
+    <title>VoltsAmpsLogger - Dual Channel Voltage and Current Monitor</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" />
+    <link rel="stylesheet" href="css/main.css" />
+    <script src="js/main.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 sectionHeadFullRowColumn">
+                <h1>VoltsAmpsLogger - Dual Channel Voltage and Current Monitor</h1>
+                <figure class="centeredImage">
+                    <img src="images/Dual_Volt_Amp_Monitor3.jpg" alt="Dual Volt Amp Monitor device measuring two circuits." aria-describedby="capDual_Volt_Amp_Monitor3" /><br />
+                    <figcaption id="capDual_Volt_Amp_Monitor3">Figure 1: Photo of the finished Dual Channel Voltage and Current Monitor reading two USB voltages and loads.</figcaption>
+                </figure>
+                <h2>Overview</h2>
+                <p>These are the GitHub pages for the VoltsAmpsLogger project. View the code in the <a href="https://github.com/richteel/VoltsAmpsLogger">VoltsAmpsLogger Code Repository</a></p>
+                <p>The Dual Channel Voltage and Current Monitor (aka: VoltsAmpsLogger) project was created as I needed a way to look at the voltage and current going into an <a href="https://www.adafruit.com/product/2465">Adafruit Powerboost 1000c</a> module and through the soft switch circuit that I built from <a href="http://www.mosaic-industries.com/embedded-systems/microcontroller-projects/raspberry-pi/on-off-power-controller">Mosaic Industries Raspberry Pi ON/OFF Power Controller</a>. I wanted to be able to monitor the voltage and current coming out of the controller and going into the Raspberry Pi.</p>
+                <p>The project is based on the <a href="https://www.adafruit.com/product/904">Adafruit INA219 High Side DC Current Sensor Breakout</a> and a Raspberry Pi Pico. The Raspberry Pi Pico is a bit overkill for this project, but I have a few on hand so that is what I choose to use.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 sectionHeadFullRowColumn">
+                <h2>References</h2>
+                <ul>
+                    <li>
+                        TaW had a good reply to SunAwtCanvas's question regarding <a href="https://stackoverflow.com/questions/50076045/chart-auto-scroll-oscilloscope-effect">Chart Auto Scroll (Oscilloscope Effect)</a>. While I did not use the code verbatim, it did point me in the right direction.
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+
 </html>
