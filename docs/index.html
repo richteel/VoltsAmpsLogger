@@ -31,6 +31,103 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12 sectionHeadFullRowColumn">
+                <h2>Hardware Build</h2>
+                <h3>Parts List</h3>
+                <ul>
+                    <li>
+                        Adafruit <a href="https://www.adafruit.com/product/904">INA219 High Side DC Current Sensor Breakout - 26V ±3.2A Max - STEMMA QT</a><br />
+                        QTY: 2<br />
+                        NOTE: I had the older version of these on hand without the STEMMA QT connecters.
+                    </li>
+                    <li>
+                        Adafruit <a href="https://www.adafruit.com/product/938">Monochrome 1.3" 128x64 OLED graphic display - STEMMA QT / Qwiic</a><br />
+                        QTY: 2<br />
+                        NOTE: I had the older version of these on hand without the STEMMA QT connecter.
+                    </li>
+                    <li>
+                        <a href="https://www.adafruit.com/product/4864">Raspberry Pi Pico</a><br />
+                        QTY: 1
+                    </li>
+                    <li>
+                        Adafruit <a href="https://www.adafruit.com/product/3258">Panel Mount Extension USB Cable - Micro B Male to Micro B Female</a><br />
+                        QTY: 1
+                    </li>
+                    <li>
+                        Adafruit <a href="https://www.adafruit.com/product/936">Panel Mount USB Cable - B Female to Mini-B Male</a><br />
+                        QTY: 2
+                    </li>
+                    <li>
+                        Adafruit <a href="https://www.adafruit.com/product/908">Panel Mount USB Cable - A Male to A Female</a><br />
+                        QTY: 2<br />
+                        NOTE: I had some similar ones on hand that plug into PC Motherboards, which I used instead.
+                    </li>
+                    <li>
+                        Adafruit <a href="https://www.adafruit.com/product/1609">Adafruit Perma-Proto Half-sized Breadboard PCB - Single</a><br />
+                        QTY: 2<br />
+                        One was used for the Raspberry Pi Pico and the other for the 2 INA219 breakout boards.
+                    </li>
+                    <li>
+                        Radio Shack <a href="https://www.radioshack.com/collections/banana-connectors/products/radioshack-10a-250v-ac-binding-posts-2-pack">10A/250V AC Binding Posts (2-Pack)</a><br />
+                        QTY: 4 (4 packs for a total 8 binding posts with 4 red and 4 black)
+                    </li>
+                    <li>
+                        Radio Shack <a href="https://www.radioshack.com/products/project-enclosure-8x6x3">Project Enclosure Box - 8 x 6 x 3"</a> Catalog №: 2701809<br />
+                        QTY: 1
+                    </li>
+                    <li>
+                        Glowforge <a href="https://shop.glowforge.com/products/draftboard?variant=20442192248930">Draftboard™ 12 x 20"</a><br />
+                        QTY: 1<br />
+                        Used for inside front panel and mounting plate for Perma-Proto boards
+                    </li>
+                    <li>
+                        Glowforge <a href="https://shop.glowforge.com/products/clear-acrylic-cast-transparent-glossy?variant=39434532290658">Clear Acrylic 12 x 20 x 1/8"</a><br />
+                        QTY: 1<br />
+                        Used for outside front panel
+                    </li>
+                    <li>
+                        Miscellaneous mounting hardware. Screws, nuts, and binding posts.
+                    </li>
+                    <li>
+                        Heat Shrink Tubing
+                    </li>
+                    <li>
+                        Hookup Wire
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 sectionHeadFullRowColumn">
+                <h2>Raspberry Pi Pico CircuitPython Code</h2>
+                <p>Write-up Coming Soon</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 sectionHeadFullRowColumn">
+                <h2>Windows Desktop Application Code</h2>
+                <p>Write-up Coming Soon</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 sectionHeadFullRowColumn">
+                <h2>Next Steps/Going Further</h2>
+                <p>The data transfer rate is extremely slow. It is good enough for what is being done here but it would be nice to capture more data points over the same period. Right now, the rate is about one set of measurements per minute. (It takes about 1.2 seconds to send one set of measurements.) One way to speed this up would be to move away from JSON and sending tab delimited data. I may create another version of the Raspberry Pi Pico and Windows software to send delimited data and see if there is an improvement. I would expect to get 4 to 5 times as many measurements in the same amount of time. It still is not very fast, but it would be an improvement.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 sectionHeadFullRowColumn">
                 <h2>References</h2>
                 <ul>
                     <li>
@@ -40,6 +137,4 @@
             </div>
         </div>
     </div>
-</body>
-
-</html>
+</body></html>

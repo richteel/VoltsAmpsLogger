@@ -12,3 +12,7 @@ body {
 }
 
 
+
+figcaption {
+    display: block;
+}

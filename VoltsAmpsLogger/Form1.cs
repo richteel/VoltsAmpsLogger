@@ -32,6 +32,7 @@ namespace VoltsAmpsLogger
         private SerialPort _serialPort;
         //private Queue<Reading> _readingQueue;
         private ArrayList readings;
+        private long readingCount;
 
         private string[] _baudRates = {
             "300", "600", "1200", "2400", "4800", "9600", "14400",
@@ -112,7 +113,7 @@ namespace VoltsAmpsLogger
             }
 
             // Update data points
-            lblDataReceived.Text = string.Format("Received: {0} measurements", readings.Count);
+            lblDataReceived.Text = string.Format("Received: {0:n0} measurements", readingCount);
         }
 
         private void ConnectToComPort()
@@ -166,7 +167,7 @@ namespace VoltsAmpsLogger
                     readings.RemoveAt(0);
                 }
 
-                Console.WriteLine(data);
+                readingCount++;
 
                 updateChart();
             }
