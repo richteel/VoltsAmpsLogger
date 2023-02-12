@@ -50,6 +50,7 @@
             this.gitHubPagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lblComStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lblDataReceived = new System.Windows.Forms.ToolStripStatusLabel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
@@ -60,7 +61,6 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.saveFileDialogData = new System.Windows.Forms.SaveFileDialog();
             this.saveFileDialogChart = new System.Windows.Forms.SaveFileDialog();
-            this.lblDataReceived = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -98,14 +98,14 @@
             this.saveDataFileToolStripMenuItem.Name = "saveDataFileToolStripMenuItem";
             this.saveDataFileToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.saveDataFileToolStripMenuItem.Text = "Save &Data File";
-            this.saveDataFileToolStripMenuItem.Click += new System.EventHandler(this.saveDataFileToolStripMenuItem_Click);
+            this.saveDataFileToolStripMenuItem.Click += new System.EventHandler(this.SaveDataFileToolStripMenuItem_Click);
             // 
             // saveChartImageToolStripMenuItem
             // 
             this.saveChartImageToolStripMenuItem.Name = "saveChartImageToolStripMenuItem";
             this.saveChartImageToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.saveChartImageToolStripMenuItem.Text = "Save &Chart Image";
-            this.saveChartImageToolStripMenuItem.Click += new System.EventHandler(this.saveChartImageToolStripMenuItem_Click);
+            this.saveChartImageToolStripMenuItem.Click += new System.EventHandler(this.SaveChartImageToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
@@ -117,7 +117,7 @@
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
             // toolsToolStripMenuItem
             // 
@@ -127,7 +127,7 @@
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
             this.toolsToolStripMenuItem.Text = "&Tools";
-            this.toolsToolStripMenuItem.DropDownOpening += new System.EventHandler(this.toolsToolStripMenuItem_DropDownOpening);
+            this.toolsToolStripMenuItem.DropDownOpening += new System.EventHandler(this.ToolsToolStripMenuItem_DropDownOpening);
             // 
             // portToolStripMenuItem
             // 
@@ -153,16 +153,16 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.aboutToolStripMenuItem.Text = "&About";
-            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItem_Click);
             // 
             // gitHubPagesToolStripMenuItem
             // 
             this.gitHubPagesToolStripMenuItem.Name = "gitHubPagesToolStripMenuItem";
-            this.gitHubPagesToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.gitHubPagesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.gitHubPagesToolStripMenuItem.Text = "&GitHub Pages";
-            this.gitHubPagesToolStripMenuItem.Click += new System.EventHandler(this.gitHubPagesToolStripMenuItem_Click);
+            this.gitHubPagesToolStripMenuItem.Click += new System.EventHandler(this.GitHubPagesToolStripMenuItem_Click);
             // 
             // statusStrip1
             // 
@@ -181,6 +181,13 @@
             this.lblComStatus.Name = "lblComStatus";
             this.lblComStatus.Size = new System.Drawing.Size(150, 17);
             this.lblComStatus.Text = "Status: Not Connected";
+            // 
+            // lblDataReceived
+            // 
+            this.lblDataReceived.AutoSize = false;
+            this.lblDataReceived.Name = "lblDataReceived";
+            this.lblDataReceived.Size = new System.Drawing.Size(200, 17);
+            this.lblDataReceived.Text = "Received: 0 measurements";
             // 
             // panel1
             // 
@@ -301,7 +308,7 @@
             this.cmdStart.TabIndex = 1;
             this.cmdStart.Text = "Start";
             this.cmdStart.UseVisualStyleBackColor = true;
-            this.cmdStart.Click += new System.EventHandler(this.cmdStart_Click);
+            this.cmdStart.Click += new System.EventHandler(this.CmdStart_Click);
             // 
             // lblConnectInstruction
             // 
@@ -318,7 +325,7 @@
             // 
             this.timer1.Enabled = true;
             this.timer1.Interval = 2000;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            this.timer1.Tick += new System.EventHandler(this.Timer1_Tick);
             // 
             // saveFileDialogData
             // 
@@ -330,13 +337,6 @@
             // 
             this.saveFileDialogChart.FileName = "ScopeImage";
             this.saveFileDialogChart.Filter = "PNG file|*.png|JPG file|*.jpg|GIF file|*.gif|BMP file|*.bmp|TIFF file|*\'tiff";
-            // 
-            // lblDataReceived
-            // 
-            this.lblDataReceived.AutoSize = false;
-            this.lblDataReceived.Name = "lblDataReceived";
-            this.lblDataReceived.Size = new System.Drawing.Size(200, 17);
-            this.lblDataReceived.Text = "Received: 0 measurements";
             // 
             // Form1
             // 
@@ -351,7 +351,6 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "Voltage and Current Logger";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
