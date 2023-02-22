@@ -176,25 +176,25 @@ while True:
             in_text = in_text.lower()
             # uart.write(bytearray(("RX: " + in_text + "\r\n").encode()))
             print("RX: {0}".format(in_text))
-            if in_text == ".so." or in_text == ".os." or in_text == ".s.":
+            if in_text in(".so.", ".os.", ".s."):
                 display_enable = False
                 serial_enable = True
                 powerInterval = 0.01
                 update_display(oled_0, None, "     Serial Mode")
                 update_display(oled_1, None, "     Serial Mode")
                 print("Serial Only")
-            elif in_text == ".sd." or in_text == ".ds.":
+            elif in_text in(".sd.", ".ds."):
                 display_enable = True
                 serial_enable = True
                 displayInterval = displayIntervalDefault
                 powerInterval = powerIntervalDefault
                 print("Serial & Display")
-            elif in_text == ".do." or in_text == ".od." or in_text == ".d.":
+            elif in_text in(".do.", ".od.", ".d."):
                 display_enable = True
                 serial_enable = False
                 displayInterval = 0.1
                 print("Display Only")
-            elif in_text == ".oo." or in_text == ".o.":
+            elif in_text in(".oo.", ".o."):
                 display_enable = False
                 serial_enable = False
                 print("None - Stop")
