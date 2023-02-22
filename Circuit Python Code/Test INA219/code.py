@@ -86,4 +86,3 @@ while True:
         print("")
 
     time.sleep(2)
-    

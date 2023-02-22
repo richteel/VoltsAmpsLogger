@@ -159,14 +159,12 @@ delformat = "{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}"
 display_enable = True
 serial_enable = False
 
-# print(usb_cdc.serials)
-
 if usb_cdc.data is None:
     uart = usb_cdc.console
 else:
     uart = usb_cdc.data
 
-# uart.timeout = 0  # If 0, do not wait.
+uart.timeout = 0  # If 0, do not wait.
 
 while True:
     in_lines = read_serial(uart).splitlines()
