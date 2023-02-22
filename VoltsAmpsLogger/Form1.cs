@@ -394,11 +394,11 @@ namespace VoltsAmpsLogger
                 // WinForms app
                 Application.Exit();
             }
-            else
-            {
-                // Console app
-                Environment.Exit(1);
-            }
+            //else
+            //{
+            //    // Console app
+            //    Environment.Exit(1);
+            //}
         }
 
         /// <summary>

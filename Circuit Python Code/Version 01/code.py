@@ -47,7 +47,7 @@ def read_serial(serial):
     while serial.in_waiting:
         raw = serial.read(serial.in_waiting)
         text = raw.decode("utf-8")
-    
+
     serialText += text
 
     # if len(serialText) > 0:
@@ -61,8 +61,8 @@ def read_serial(serial):
         text = serialText.strip()
         serialText = ""
         return text
-    else:
-        return ""
+   
+    return ""
 
 CHANNEL_TEXT = "Channel"
 ONE_TEXT = "One"
@@ -148,8 +148,6 @@ powerPreviousTime = time.monotonic()
 powerIntervalDefault = 0.2  # Time in seconds
 powerInterval = 0.01    # Time in seconds
 
-oled_0
-
 meter_0 = get_ina219_data(ina219_0)
 meter_1 = get_ina219_data(ina219_1)
 
@@ -162,11 +160,11 @@ serial_enable = False
 
 # print(usb_cdc.serials)
 
-if usb_cdc.data == None:
+if usb_cdc.data is None:
     uart = usb_cdc.console
 else:
     uart = usb_cdc.data
-    
+
 # uart.timeout = 0  # If 0, do not wait.
 
 while True:

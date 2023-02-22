@@ -72,7 +72,7 @@ while True:
 
         oled_test_1 = not oled_test_1
 
-    
+
     if time.monotonic() - powerPreviousTime >= powerInterval:
         powerPreviousTime = time.monotonic()
 

@@ -63,8 +63,8 @@ while True:
     if ina219_0.overflow:
         print("Internal Math Overflow Detected!")
         print("")
-    
-    
+
+
     bus_voltage_1 = ina219_1.bus_voltage  # voltage on V- (load side)
     shunt_voltage_1 = ina219_1.shunt_voltage  # voltage between V+ and V- across the shunt
     current_1 = ina219_1.current  # current in mA
@@ -86,3 +86,4 @@ while True:
         print("")
 
     time.sleep(2)
+    

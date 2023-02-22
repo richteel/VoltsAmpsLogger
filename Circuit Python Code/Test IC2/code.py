@@ -11,7 +11,6 @@
 import time
 import board
 import busio
-from digitalio import DigitalInOut, Direction, Pull
 
 # To use default I2C bus (most boards)
 # i2c = board.I2C()  # uses board.SCL and board.SDA

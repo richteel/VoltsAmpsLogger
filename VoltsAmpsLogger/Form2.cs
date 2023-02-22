@@ -201,7 +201,7 @@ namespace VoltsAmpsLogger
                 }
                 if (portFound)
                 {
-                    Console.WriteLine(string.Format("**** Found Meter on {0} ****", _comPortItemSelected.Name));
+                    Console.WriteLine("**** Found Meter on {0} ****", _comPortItemSelected.Name);
                     break;
                 }
                 else
@@ -614,11 +614,11 @@ namespace VoltsAmpsLogger
                 // WinForms app
                 Application.Exit();
             }
-            else
-            {
-                // Console app
-                Environment.Exit(1);
-            }
+            //else
+            //{
+            //    // Console app
+            //    Environment.Exit(1);
+            //}
         }
 
         /// <summary>
