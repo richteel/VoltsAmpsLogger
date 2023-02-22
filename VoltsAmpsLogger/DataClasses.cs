@@ -33,4 +33,16 @@ namespace VoltsAmpsLogger
         public Meter channel_2 { get; set; }
         public DateTime received { get; set; }
     }
+
+    public class ReceivedData
+    {
+        public DateTime receivedDateTime { get; set; }
+        public string receivedText { get; set; }
+
+        public ReceivedData(string data)
+        {
+            receivedDateTime= DateTime.Now;
+            receivedText= data;
+        }
+    }
 }

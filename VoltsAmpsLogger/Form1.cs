@@ -24,13 +24,15 @@ namespace VoltsAmpsLogger
         private ArrayList _readings;
         private SerialPort _serialPort;
         private long _readingCount;
+        private long _bytesToRead;
+        Reading _lastReading;
 
         private string[] _baudRates = {
             "300", "600", "1200", "2400", "4800", "9600", "14400",
             "19200", "28800", "31250", "38400", "57600", "115200"
         };
         private string _baudRateSelected = "115200";
-        private const int _maxReadingsBufferSize = 1024;
+        private const int _maxReadingsBufferSize = 2048;
 
         /*********************************************************************************
          * Class Constructor 
@@ -88,6 +90,9 @@ namespace VoltsAmpsLogger
         {
             if (string.IsNullOrEmpty(_comPortItemSelected.Name)) { return; }
 
+            _bytesToRead = 0;
+            _readingCount = 0;
+
             int b = int.Parse(_baudRateSelected);
 
             _serialPort = new SerialPort(_comPortItemSelected.Name, int.Parse(_baudRateSelected));
@@ -98,7 +103,16 @@ namespace VoltsAmpsLogger
             _serialPort.DtrEnable = true;
 
             _serialPort.DataReceived += new SerialDataReceivedEventHandler(SerialPort_DataReceived);
-            _serialPort.Open();
+
+            try
+            {
+                _serialPort.Open();
+            }
+            catch(System.UnauthorizedAccessException ex) {
+                MessageBox.Show(this, string.Format("ERROR: {0} Port is in use.", _comPortItemSelected.Name),
+                    "Failed to Open Port", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Console.WriteLine(ex.Message);
+            }
         }
 
         /// <summary>
@@ -172,6 +186,11 @@ namespace VoltsAmpsLogger
         /// </summary>
         private void UpdateChart()
         {
+            if(_readings.Count == 0)
+            {
+                return;
+            }
+
             if (InvokeRequired)
             {
                 Invoke(new Action(UpdateChart), new object[] { });
@@ -193,7 +212,7 @@ namespace VoltsAmpsLogger
             // Find stating data point index
             for (int pointIdx = _readings.Count - 1; pointIdx > 0; pointIdx--)
             {
-                if (((Reading)_readings[pointIdx]).received <= zeroTime)
+                if (pointIdx < _readings.Count && ((Reading)_readings[pointIdx]).received <= zeroTime)
                 {
                     startDataIndex = pointIdx;
                     break;
@@ -232,6 +251,8 @@ namespace VoltsAmpsLogger
         /// <param name="meterVals">The values to be displayed in the control.</param>
         private void UpdateMeter(UC_Meter meterCtrl, Meter meterVals)
         {
+            if(meterVals== null) { return; }
+
             if (InvokeRequired)
             {
                 Invoke(new Action<UC_Meter, Meter>(UpdateMeter), new object[] { meterCtrl, meterVals });
@@ -285,6 +306,7 @@ namespace VoltsAmpsLogger
 
             // Update data points
             lblDataReceived.Text = string.Format("Received: {0:n0} measurements", _readingCount);
+            lblBytesToRead.Text = string.Format("Bytes to Read: {0:n0}", _bytesToRead);
         }
 
         /*********************************************************************************
@@ -330,6 +352,7 @@ namespace VoltsAmpsLogger
 
         /// <summary>
         /// Event handler for the Start/Stop button. It starts or stop the collection of data from the serial port.
+        /// Sends the command to the device to enable/disable display and serial
         /// </summary>
         /// <param name="sender">The object that fired the event.</param>
         /// <param name="e">Event information related to this event.</param>
@@ -344,6 +367,16 @@ namespace VoltsAmpsLogger
             else
             {
                 _serialPort.Close();
+            }
+
+            // Send command
+            if (_serialPort != null && _serialPort.IsOpen)
+            {
+                string display = chkDisplay.Checked ? "d" : "o";
+                string serial = chkSerial.Checked ? "s" : "o";
+                string cmdToSend = string.Format(".{0}{1}.", display, serial);
+
+                _serialPort.Write(cmdToSend);
             }
 
             UpdateStatus();
@@ -380,7 +413,7 @@ namespace VoltsAmpsLogger
         /// </remarks>
         private void Form1_Load(object sender, EventArgs e)
         {
-            panel1.Visible = false;
+            //panel1.Visible = false;
 
             foreach (string baud in _baudRates)
             {
@@ -518,10 +551,8 @@ namespace VoltsAmpsLogger
 
                 dataObj.received = DateTime.Now;
 
-                UpdateMeter(uC_Meter1, dataObj.channel_1);
-                UpdateMeter(uC_Meter2, dataObj.channel_2);
-
                 _readings.Add(dataObj);
+                _lastReading = dataObj;
 
                 while (_readings.Count > _maxReadingsBufferSize)
                 {
@@ -529,13 +560,10 @@ namespace VoltsAmpsLogger
                 }
 
                 _readingCount++;
-
-                UpdateChart();
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                UpdateStatus();
             }
         }
 
@@ -552,6 +580,13 @@ namespace VoltsAmpsLogger
         private void Timer1_Tick(object sender, EventArgs e)
         {
             UpdateStatus();
+            UpdateChart();
+
+            if (_lastReading != null)
+            {
+                UpdateMeter(uC_Meter1, _lastReading.channel_1);
+                UpdateMeter(uC_Meter2, _lastReading.channel_2);
+            }
         }
 
         /// <summary>

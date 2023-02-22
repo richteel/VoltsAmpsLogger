@@ -56,8 +56,6 @@ test_display(oled_1, "/")
 powerPreviousTime = time.monotonic()
 powerInterval = 0.2    # Time in seconds
 
-oled_0
-
 # Print data headers
 print("TIME\tVIN_IN_1\tVIN_OUT_1\tShuntV_1\tShuntC_1\tPowerCal_1\tPowerRegister_1\tVIN_IN_2\tVIN_OUT_2\tShuntV_2\tShuntC_2\tPowerCal_2\tPowerRegister_2")
 
@@ -88,7 +86,6 @@ while True:
         current_1 = ina219_1.current  # current in mA
         power_1 = ina219_1.power  # power in watts
 
-        # print("VIN_IN_1\tVIN_OUT_1\tShuntV_1\tShuntC_1\tPowerCal_1\tPowerRegister_1\tVIN_IN_2\tVIN_OUT_2\tShuntV_2\tShuntC_2\tPowerCal_2\tPowerRegister_2")
         print(("{:.3f}\t{:.3f}\t{:.3f}\t{:.5f}\t{:.4f}\t{:.5f}\t{:.3f}\t{:.3f}" +
                     "\t{:.3f}\t{:.5f}\t{:.4f}\t{:.5f}\t{:.3f}").format( displayPreviousTime,
                                                                         (bus_voltage_0 + shunt_voltage_0), bus_voltage_0, shunt_voltage_0, (current_0 / 1000), 

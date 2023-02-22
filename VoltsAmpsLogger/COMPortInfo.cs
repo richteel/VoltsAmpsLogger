@@ -38,6 +38,11 @@ namespace VoltsAmpsLogger
 
         public COMPortInfo() { }
 
+        public override string ToString()
+        {
+            return Description;
+        }
+
         public static List<COMPortInfo> GetCOMPortsInfo()
         {
             List<COMPortInfo> comPortInfoList = new List<COMPortInfo>();

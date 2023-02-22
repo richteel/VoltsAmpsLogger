@@ -47,6 +47,12 @@
             this.panPower = new System.Windows.Forms.Panel();
             this.txtPower = new System.Windows.Forms.TextBox();
             this.lblPower = new System.Windows.Forms.Label();
+            this.lblVinUnits = new System.Windows.Forms.Label();
+            this.lblVoutUnits = new System.Windows.Forms.Label();
+            this.lblVShuntUnits = new System.Windows.Forms.Label();
+            this.lblIShuntUnits = new System.Windows.Forms.Label();
+            this.lblPowerCalUnits = new System.Windows.Forms.Label();
+            this.lblPowerUnits = new System.Windows.Forms.Label();
             this.panVin.SuspendLayout();
             this.panVout.SuspendLayout();
             this.panVshunt.SuspendLayout();
@@ -68,6 +74,7 @@
             // 
             // panVin
             // 
+            this.panVin.Controls.Add(this.lblVinUnits);
             this.panVin.Controls.Add(this.txtVin);
             this.panVin.Controls.Add(this.lblVin);
             this.panVin.Dock = System.Windows.Forms.DockStyle.Top;
@@ -79,12 +86,13 @@
             // 
             // txtVin
             // 
-            this.txtVin.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtVin.Dock = System.Windows.Forms.DockStyle.Left;
             this.txtVin.Location = new System.Drawing.Point(63, 3);
             this.txtVin.Name = "txtVin";
             this.txtVin.ReadOnly = true;
-            this.txtVin.Size = new System.Drawing.Size(222, 20);
+            this.txtVin.Size = new System.Drawing.Size(80, 20);
             this.txtVin.TabIndex = 1;
+            this.txtVin.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblVin
             // 
@@ -98,6 +106,7 @@
             // 
             // panVout
             // 
+            this.panVout.Controls.Add(this.lblVoutUnits);
             this.panVout.Controls.Add(this.txtVout);
             this.panVout.Controls.Add(this.lblVout);
             this.panVout.Dock = System.Windows.Forms.DockStyle.Top;
@@ -109,12 +118,13 @@
             // 
             // txtVout
             // 
-            this.txtVout.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtVout.Dock = System.Windows.Forms.DockStyle.Left;
             this.txtVout.Location = new System.Drawing.Point(63, 3);
             this.txtVout.Name = "txtVout";
             this.txtVout.ReadOnly = true;
-            this.txtVout.Size = new System.Drawing.Size(222, 20);
+            this.txtVout.Size = new System.Drawing.Size(80, 20);
             this.txtVout.TabIndex = 1;
+            this.txtVout.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblVout
             // 
@@ -128,6 +138,7 @@
             // 
             // panVshunt
             // 
+            this.panVshunt.Controls.Add(this.lblVShuntUnits);
             this.panVshunt.Controls.Add(this.txtVshunt);
             this.panVshunt.Controls.Add(this.lblVshunt);
             this.panVshunt.Dock = System.Windows.Forms.DockStyle.Top;
@@ -139,12 +150,13 @@
             // 
             // txtVshunt
             // 
-            this.txtVshunt.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtVshunt.Dock = System.Windows.Forms.DockStyle.Left;
             this.txtVshunt.Location = new System.Drawing.Point(63, 3);
             this.txtVshunt.Name = "txtVshunt";
             this.txtVshunt.ReadOnly = true;
-            this.txtVshunt.Size = new System.Drawing.Size(222, 20);
+            this.txtVshunt.Size = new System.Drawing.Size(80, 20);
             this.txtVshunt.TabIndex = 1;
+            this.txtVshunt.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblVshunt
             // 
@@ -158,6 +170,7 @@
             // 
             // panIshunt
             // 
+            this.panIshunt.Controls.Add(this.lblIShuntUnits);
             this.panIshunt.Controls.Add(this.txtIshunt);
             this.panIshunt.Controls.Add(this.lblIshunt);
             this.panIshunt.Dock = System.Windows.Forms.DockStyle.Top;
@@ -169,12 +182,13 @@
             // 
             // txtIshunt
             // 
-            this.txtIshunt.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtIshunt.Dock = System.Windows.Forms.DockStyle.Left;
             this.txtIshunt.Location = new System.Drawing.Point(63, 3);
             this.txtIshunt.Name = "txtIshunt";
             this.txtIshunt.ReadOnly = true;
-            this.txtIshunt.Size = new System.Drawing.Size(222, 20);
+            this.txtIshunt.Size = new System.Drawing.Size(80, 20);
             this.txtIshunt.TabIndex = 1;
+            this.txtIshunt.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblIshunt
             // 
@@ -188,6 +202,7 @@
             // 
             // panPowrCal
             // 
+            this.panPowrCal.Controls.Add(this.lblPowerCalUnits);
             this.panPowrCal.Controls.Add(this.txtPowrCal);
             this.panPowrCal.Controls.Add(this.lblPowrCalc);
             this.panPowrCal.Dock = System.Windows.Forms.DockStyle.Top;
@@ -199,12 +214,13 @@
             // 
             // txtPowrCal
             // 
-            this.txtPowrCal.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtPowrCal.Dock = System.Windows.Forms.DockStyle.Left;
             this.txtPowrCal.Location = new System.Drawing.Point(63, 3);
             this.txtPowrCal.Name = "txtPowrCal";
             this.txtPowrCal.ReadOnly = true;
-            this.txtPowrCal.Size = new System.Drawing.Size(222, 20);
+            this.txtPowrCal.Size = new System.Drawing.Size(80, 20);
             this.txtPowrCal.TabIndex = 1;
+            this.txtPowrCal.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblPowrCalc
             // 
@@ -218,6 +234,7 @@
             // 
             // panPower
             // 
+            this.panPower.Controls.Add(this.lblPowerUnits);
             this.panPower.Controls.Add(this.txtPower);
             this.panPower.Controls.Add(this.lblPower);
             this.panPower.Dock = System.Windows.Forms.DockStyle.Top;
@@ -229,12 +246,13 @@
             // 
             // txtPower
             // 
-            this.txtPower.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtPower.Dock = System.Windows.Forms.DockStyle.Left;
             this.txtPower.Location = new System.Drawing.Point(63, 3);
             this.txtPower.Name = "txtPower";
             this.txtPower.ReadOnly = true;
-            this.txtPower.Size = new System.Drawing.Size(222, 20);
+            this.txtPower.Size = new System.Drawing.Size(80, 20);
             this.txtPower.TabIndex = 1;
+            this.txtPower.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblPower
             // 
@@ -245,6 +263,66 @@
             this.lblPower.TabIndex = 0;
             this.lblPower.Text = "Power:";
             this.lblPower.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // lblVinUnits
+            // 
+            this.lblVinUnits.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblVinUnits.Location = new System.Drawing.Point(143, 3);
+            this.lblVinUnits.Name = "lblVinUnits";
+            this.lblVinUnits.Size = new System.Drawing.Size(142, 20);
+            this.lblVinUnits.TabIndex = 2;
+            this.lblVinUnits.Text = "V";
+            this.lblVinUnits.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblVoutUnits
+            // 
+            this.lblVoutUnits.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblVoutUnits.Location = new System.Drawing.Point(143, 3);
+            this.lblVoutUnits.Name = "lblVoutUnits";
+            this.lblVoutUnits.Size = new System.Drawing.Size(142, 20);
+            this.lblVoutUnits.TabIndex = 3;
+            this.lblVoutUnits.Text = "V";
+            this.lblVoutUnits.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblVShuntUnits
+            // 
+            this.lblVShuntUnits.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblVShuntUnits.Location = new System.Drawing.Point(143, 3);
+            this.lblVShuntUnits.Name = "lblVShuntUnits";
+            this.lblVShuntUnits.Size = new System.Drawing.Size(142, 20);
+            this.lblVShuntUnits.TabIndex = 3;
+            this.lblVShuntUnits.Text = "V";
+            this.lblVShuntUnits.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblIShuntUnits
+            // 
+            this.lblIShuntUnits.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblIShuntUnits.Location = new System.Drawing.Point(143, 3);
+            this.lblIShuntUnits.Name = "lblIShuntUnits";
+            this.lblIShuntUnits.Size = new System.Drawing.Size(142, 20);
+            this.lblIShuntUnits.TabIndex = 3;
+            this.lblIShuntUnits.Text = "A";
+            this.lblIShuntUnits.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblPowerCalUnits
+            // 
+            this.lblPowerCalUnits.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblPowerCalUnits.Location = new System.Drawing.Point(143, 3);
+            this.lblPowerCalUnits.Name = "lblPowerCalUnits";
+            this.lblPowerCalUnits.Size = new System.Drawing.Size(142, 20);
+            this.lblPowerCalUnits.TabIndex = 3;
+            this.lblPowerCalUnits.Text = "W";
+            this.lblPowerCalUnits.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblPowerUnits
+            // 
+            this.lblPowerUnits.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblPowerUnits.Location = new System.Drawing.Point(143, 3);
+            this.lblPowerUnits.Name = "lblPowerUnits";
+            this.lblPowerUnits.Size = new System.Drawing.Size(142, 20);
+            this.lblPowerUnits.TabIndex = 3;
+            this.lblPowerUnits.Text = "W";
+            this.lblPowerUnits.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // UC_Meter
             // 
@@ -297,5 +375,11 @@
         private System.Windows.Forms.Panel panPower;
         private System.Windows.Forms.TextBox txtPower;
         private System.Windows.Forms.Label lblPower;
+        private System.Windows.Forms.Label lblVinUnits;
+        private System.Windows.Forms.Label lblVoutUnits;
+        private System.Windows.Forms.Label lblVShuntUnits;
+        private System.Windows.Forms.Label lblIShuntUnits;
+        private System.Windows.Forms.Label lblPowerCalUnits;
+        private System.Windows.Forms.Label lblPowerUnits;
     }
 }

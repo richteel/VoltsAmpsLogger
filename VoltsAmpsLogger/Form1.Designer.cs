@@ -51,18 +51,29 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lblComStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblDataReceived = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lblBytesToRead = new System.Windows.Forms.ToolStripStatusLabel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.panCommand = new System.Windows.Forms.Panel();
+            this.chkSerial = new System.Windows.Forms.CheckBox();
+            this.chkDisplay = new System.Windows.Forms.CheckBox();
+            this.panSpace = new System.Windows.Forms.Panel();
+            this.panPort = new System.Windows.Forms.Panel();
+            this.cbPort = new System.Windows.Forms.ComboBox();
+            this.lblPort = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.uC_Meter2 = new VoltsAmpsLogger.UC_Meter();
-            this.uC_Meter1 = new VoltsAmpsLogger.UC_Meter();
-            this.cmdStart = new System.Windows.Forms.Button();
             this.lblConnectInstruction = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.saveFileDialogData = new System.Windows.Forms.SaveFileDialog();
             this.saveFileDialogChart = new System.Windows.Forms.SaveFileDialog();
+            this.cmdStart = new System.Windows.Forms.Button();
+            this.uC_Meter2 = new VoltsAmpsLogger.UC_Meter();
+            this.uC_Meter1 = new VoltsAmpsLogger.UC_Meter();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.panCommand.SuspendLayout();
+            this.panPort.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -153,14 +164,14 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.aboutToolStripMenuItem.Text = "&About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItem_Click);
             // 
             // gitHubPagesToolStripMenuItem
             // 
             this.gitHubPagesToolStripMenuItem.Name = "gitHubPagesToolStripMenuItem";
-            this.gitHubPagesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.gitHubPagesToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.gitHubPagesToolStripMenuItem.Text = "&GitHub Pages";
             this.gitHubPagesToolStripMenuItem.Click += new System.EventHandler(this.GitHubPagesToolStripMenuItem_Click);
             // 
@@ -168,7 +179,8 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lblComStatus,
-            this.lblDataReceived});
+            this.lblDataReceived,
+            this.lblBytesToRead});
             this.statusStrip1.Location = new System.Drawing.Point(0, 454);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(800, 22);
@@ -189,18 +201,106 @@
             this.lblDataReceived.Size = new System.Drawing.Size(200, 17);
             this.lblDataReceived.Text = "Received: 0 measurements";
             // 
+            // lblBytesToRead
+            // 
+            this.lblBytesToRead.AutoSize = false;
+            this.lblBytesToRead.Name = "lblBytesToRead";
+            this.lblBytesToRead.Size = new System.Drawing.Size(200, 17);
+            this.lblBytesToRead.Text = "BytesToRead";
+            // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.cmdStart);
+            this.panel1.Controls.Add(this.panCommand);
+            this.panel1.Controls.Add(this.panSpace);
+            this.panel1.Controls.Add(this.panPort);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 24);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(800, 33);
+            this.panel1.Size = new System.Drawing.Size(800, 27);
             this.panel1.TabIndex = 2;
+            // 
+            // panCommand
+            // 
+            this.panCommand.AutoSize = true;
+            this.panCommand.BackColor = System.Drawing.SystemColors.Control;
+            this.panCommand.Controls.Add(this.chkSerial);
+            this.panCommand.Controls.Add(this.chkDisplay);
+            this.panCommand.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panCommand.Location = new System.Drawing.Point(250, 0);
+            this.panCommand.Name = "panCommand";
+            this.panCommand.Padding = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            this.panCommand.Size = new System.Drawing.Size(118, 27);
+            this.panCommand.TabIndex = 5;
+            // 
+            // chkSerial
+            // 
+            this.chkSerial.AutoSize = true;
+            this.chkSerial.Checked = true;
+            this.chkSerial.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkSerial.Dock = System.Windows.Forms.DockStyle.Left;
+            this.chkSerial.Location = new System.Drawing.Point(63, 0);
+            this.chkSerial.Name = "chkSerial";
+            this.chkSerial.Size = new System.Drawing.Size(52, 27);
+            this.chkSerial.TabIndex = 9;
+            this.chkSerial.Text = "Serial";
+            this.chkSerial.UseVisualStyleBackColor = true;
+            // 
+            // chkDisplay
+            // 
+            this.chkDisplay.AutoSize = true;
+            this.chkDisplay.Checked = true;
+            this.chkDisplay.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkDisplay.Dock = System.Windows.Forms.DockStyle.Left;
+            this.chkDisplay.Location = new System.Drawing.Point(3, 0);
+            this.chkDisplay.Name = "chkDisplay";
+            this.chkDisplay.Size = new System.Drawing.Size(60, 27);
+            this.chkDisplay.TabIndex = 8;
+            this.chkDisplay.Text = "Display";
+            this.chkDisplay.UseVisualStyleBackColor = true;
+            // 
+            // panSpace
+            // 
+            this.panSpace.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panSpace.Location = new System.Drawing.Point(230, 0);
+            this.panSpace.Name = "panSpace";
+            this.panSpace.Size = new System.Drawing.Size(20, 27);
+            this.panSpace.TabIndex = 4;
+            // 
+            // panPort
+            // 
+            this.panPort.Controls.Add(this.cbPort);
+            this.panPort.Controls.Add(this.lblPort);
+            this.panPort.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panPort.Location = new System.Drawing.Point(0, 0);
+            this.panPort.Name = "panPort";
+            this.panPort.Padding = new System.Windows.Forms.Padding(3);
+            this.panPort.Size = new System.Drawing.Size(230, 27);
+            this.panPort.TabIndex = 1;
+            // 
+            // cbPort
+            // 
+            this.cbPort.Dock = System.Windows.Forms.DockStyle.Top;
+            this.cbPort.FormattingEnabled = true;
+            this.cbPort.Location = new System.Drawing.Point(66, 3);
+            this.cbPort.Name = "cbPort";
+            this.cbPort.Size = new System.Drawing.Size(161, 21);
+            this.cbPort.TabIndex = 1;
+            // 
+            // lblPort
+            // 
+            this.lblPort.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblPort.Location = new System.Drawing.Point(3, 3);
+            this.lblPort.Name = "lblPort";
+            this.lblPort.Size = new System.Drawing.Size(63, 21);
+            this.lblPort.TabIndex = 0;
+            this.lblPort.Text = "Port:";
+            this.lblPort.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 57);
+            this.splitContainer1.Location = new System.Drawing.Point(0, 51);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -211,10 +311,9 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.uC_Meter2);
             this.splitContainer1.Panel2.Controls.Add(this.uC_Meter1);
-            this.splitContainer1.Panel2.Controls.Add(this.cmdStart);
             this.splitContainer1.Panel2.Controls.Add(this.lblConnectInstruction);
             this.splitContainer1.Panel2.Padding = new System.Windows.Forms.Padding(3);
-            this.splitContainer1.Size = new System.Drawing.Size(800, 397);
+            this.splitContainer1.Size = new System.Drawing.Size(800, 403);
             this.splitContainer1.SplitterDistance = 563;
             this.splitContainer1.TabIndex = 3;
             // 
@@ -262,53 +361,9 @@
             this.chart1.Series.Add(series2);
             this.chart1.Series.Add(series3);
             this.chart1.Series.Add(series4);
-            this.chart1.Size = new System.Drawing.Size(563, 397);
+            this.chart1.Size = new System.Drawing.Size(563, 403);
             this.chart1.TabIndex = 1;
             this.chart1.Text = "chart1";
-            // 
-            // uC_Meter2
-            // 
-            this.uC_Meter2.channelName = "Channel 2";
-            this.uC_Meter2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.uC_Meter2.I_Shunt = 0D;
-            this.uC_Meter2.Location = new System.Drawing.Point(3, 227);
-            this.uC_Meter2.Name = "uC_Meter2";
-            this.uC_Meter2.Padding = new System.Windows.Forms.Padding(3);
-            this.uC_Meter2.Power = 0D;
-            this.uC_Meter2.Powr_Cal = 0D;
-            this.uC_Meter2.Size = new System.Drawing.Size(227, 150);
-            this.uC_Meter2.TabIndex = 3;
-            this.uC_Meter2.V_In = 0D;
-            this.uC_Meter2.V_Out = 0D;
-            this.uC_Meter2.V_Shunt = 0D;
-            // 
-            // uC_Meter1
-            // 
-            this.uC_Meter1.channelName = "Channel 1";
-            this.uC_Meter1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.uC_Meter1.I_Shunt = 0D;
-            this.uC_Meter1.Location = new System.Drawing.Point(3, 77);
-            this.uC_Meter1.Name = "uC_Meter1";
-            this.uC_Meter1.Padding = new System.Windows.Forms.Padding(3);
-            this.uC_Meter1.Power = 0D;
-            this.uC_Meter1.Powr_Cal = 0D;
-            this.uC_Meter1.Size = new System.Drawing.Size(227, 150);
-            this.uC_Meter1.TabIndex = 2;
-            this.uC_Meter1.V_In = 0D;
-            this.uC_Meter1.V_Out = 0D;
-            this.uC_Meter1.V_Shunt = 0D;
-            // 
-            // cmdStart
-            // 
-            this.cmdStart.Dock = System.Windows.Forms.DockStyle.Top;
-            this.cmdStart.Enabled = false;
-            this.cmdStart.Location = new System.Drawing.Point(3, 54);
-            this.cmdStart.Name = "cmdStart";
-            this.cmdStart.Size = new System.Drawing.Size(227, 23);
-            this.cmdStart.TabIndex = 1;
-            this.cmdStart.Text = "Start";
-            this.cmdStart.UseVisualStyleBackColor = true;
-            this.cmdStart.Click += new System.EventHandler(this.CmdStart_Click);
             // 
             // lblConnectInstruction
             // 
@@ -324,7 +379,7 @@
             // timer1
             // 
             this.timer1.Enabled = true;
-            this.timer1.Interval = 2000;
+            this.timer1.Interval = 500;
             this.timer1.Tick += new System.EventHandler(this.Timer1_Tick);
             // 
             // saveFileDialogData
@@ -337,6 +392,50 @@
             // 
             this.saveFileDialogChart.FileName = "ScopeImage";
             this.saveFileDialogChart.Filter = "PNG file|*.png|JPG file|*.jpg|GIF file|*.gif|BMP file|*.bmp|TIFF file|*\'tiff";
+            // 
+            // cmdStart
+            // 
+            this.cmdStart.Dock = System.Windows.Forms.DockStyle.Left;
+            this.cmdStart.Enabled = false;
+            this.cmdStart.Location = new System.Drawing.Point(368, 0);
+            this.cmdStart.Name = "cmdStart";
+            this.cmdStart.Size = new System.Drawing.Size(75, 27);
+            this.cmdStart.TabIndex = 6;
+            this.cmdStart.Text = "Start";
+            this.cmdStart.UseVisualStyleBackColor = true;
+            this.cmdStart.Click += new System.EventHandler(this.CmdStart_Click);
+            // 
+            // uC_Meter2
+            // 
+            this.uC_Meter2.channelName = "Channel 2";
+            this.uC_Meter2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.uC_Meter2.I_Shunt = 0D;
+            this.uC_Meter2.Location = new System.Drawing.Point(3, 204);
+            this.uC_Meter2.Name = "uC_Meter2";
+            this.uC_Meter2.Padding = new System.Windows.Forms.Padding(3);
+            this.uC_Meter2.Power = 0D;
+            this.uC_Meter2.Powr_Cal = 0D;
+            this.uC_Meter2.Size = new System.Drawing.Size(227, 150);
+            this.uC_Meter2.TabIndex = 3;
+            this.uC_Meter2.V_In = 0D;
+            this.uC_Meter2.V_Out = 0D;
+            this.uC_Meter2.V_Shunt = 0D;
+            // 
+            // uC_Meter1
+            // 
+            this.uC_Meter1.channelName = "Channel 1";
+            this.uC_Meter1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.uC_Meter1.I_Shunt = 0D;
+            this.uC_Meter1.Location = new System.Drawing.Point(3, 54);
+            this.uC_Meter1.Name = "uC_Meter1";
+            this.uC_Meter1.Padding = new System.Windows.Forms.Padding(3);
+            this.uC_Meter1.Power = 0D;
+            this.uC_Meter1.Powr_Cal = 0D;
+            this.uC_Meter1.Size = new System.Drawing.Size(227, 150);
+            this.uC_Meter1.TabIndex = 2;
+            this.uC_Meter1.V_In = 0D;
+            this.uC_Meter1.V_Out = 0D;
+            this.uC_Meter1.V_Shunt = 0D;
             // 
             // Form1
             // 
@@ -356,6 +455,11 @@
             this.menuStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.panCommand.ResumeLayout(false);
+            this.panCommand.PerformLayout();
+            this.panPort.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
@@ -378,7 +482,6 @@
         private System.Windows.Forms.ToolStripMenuItem portToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem baudRateToolStripMenuItem;
         private System.Windows.Forms.Label lblConnectInstruction;
-        private System.Windows.Forms.Button cmdStart;
         private System.Windows.Forms.ToolStripStatusLabel lblComStatus;
         private System.Windows.Forms.Timer timer1;
         private UC_Meter uC_Meter1;
@@ -393,6 +496,15 @@
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem gitHubPagesToolStripMenuItem;
         private System.Windows.Forms.ToolStripStatusLabel lblDataReceived;
+        private System.Windows.Forms.ToolStripStatusLabel lblBytesToRead;
+        private System.Windows.Forms.Panel panCommand;
+        private System.Windows.Forms.CheckBox chkSerial;
+        private System.Windows.Forms.CheckBox chkDisplay;
+        private System.Windows.Forms.Panel panSpace;
+        private System.Windows.Forms.Panel panPort;
+        private System.Windows.Forms.ComboBox cbPort;
+        private System.Windows.Forms.Label lblPort;
+        private System.Windows.Forms.Button cmdStart;
     }
 }
 

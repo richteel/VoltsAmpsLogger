@@ -4,12 +4,16 @@ import busio
 import digitalio
 import displayio
 import json
+import usb_cdc
 
 # Import the SSD1306 module.
 import adafruit_ssd1306
 
 # Import the INA219 module.
 import adafruit_ina219
+
+versionHW = "HW v0.1:  5 Feb 2023"
+versionSW = "SW v0.1: 21 Feb 2023"
 
 
 def display_text(disp, txt, pos_char, pos_line, color):
@@ -19,7 +23,7 @@ def display_text(disp, txt, pos_char, pos_line, color):
     disp.text(txt, x, y, color)
 
 
-def get_ina219_info(meter):
+def get_ina219_data(meter):
     bus_voltage = meter.bus_voltage  # voltage on V- (load side)
     shunt_voltage = meter.shunt_voltage  # voltage between V+ and V- across the shunt
     current = meter.current  # current in mA
@@ -32,17 +36,57 @@ def get_ina219_info(meter):
             "PowerCal": (bus_voltage * (current / 1000)),
             "PowerRegister": power}
 
+# REF: https://stackoverflow.com/questions/65647986/how-to-do-non-blocking-usb-serial-input-in-circuit-python
 
-def update_display(disp, ina219_info):
+serialText = ""
+
+def read_serial(serial):
+    global serialText
+
+    text = ""
+    while serial.in_waiting:
+        raw = serial.read(serial.in_waiting)
+        text = raw.decode("utf-8")
+    
+    serialText += text
+
+    # if len(serialText) > 0:
+    #    print("00 RX: {0}".format(serialText))
+
+    if(len(serialText)> 0 and not serialText.startswith(".")):
+        print("Discarded: {0}".format(serialText))
+        serialText = ""
+
+    if "\n" in serialText or "\r" in serialText:
+        text = serialText.strip()
+        serialText = ""
+        return text
+    else:
+        return ""
+
+CHANNEL_TEXT = "Channel"
+ONE_TEXT = "One"
+TWO_TEXT = "Two"
+VIN_TEXT = "    V-In:  {:6.3f}   V"
+VOUT_TEXT = "   V-Out:  {:6.3f}   V"
+VSHUNT_TEXT = " V-Shunt:  {:8.5f} V"
+ISHUNT_TEXT = " I-Shunt: {:7.3f}   A"
+POWERCALC_TEXT = "Powr-Cal:  {:8.5f} W"
+POWER_TEXT = "   Power:  {:6.3f}   W"
+
+def update_display(disp, ina219_info, s=""):
     if ina219_info is None:
         disp.fill(1)
-        display_text(disp, "Channel", 7, 2, 0)
-        display_text(disp, "v0.1: 5 February 2023", 0, 5, 0)
-        # disp.text("Channel", 42, 20, 0)
-        if disp == oled_0:
-            display_text(disp, "One", 9, 3, 0)
+        if s == "":
+            display_text(disp, CHANNEL_TEXT, 7, 2, 0)
+            display_text(disp, versionHW, 0, 4, 0)
+            display_text(disp, versionSW, 0, 5, 0)
+            if disp == oled_0:
+                display_text(disp, ONE_TEXT, 9, 3, 0)
+            else:
+                display_text(disp, TWO_TEXT, 9, 3, 0)
         else:
-            display_text(disp, "Two", 9, 3, 0)
+            display_text(disp, s, 0, 3, 0)
 
         disp.show()
 
@@ -51,16 +95,16 @@ def update_display(disp, ina219_info):
     disp.fill(0)
 
     display_text(
-        disp, "    V-In:  {:6.3f}   V".format(ina219_info["VIN_IN"]), 0, 0, 1)
+        disp, VIN_TEXT.format(ina219_info["VIN_IN"]), 0, 0, 1)
     display_text(
-        disp, "   V-Out:  {:6.3f}   V".format(ina219_info["VIN_OUT"]), 0, 1, 1)
+        disp, VOUT_TEXT.format(ina219_info["VIN_OUT"]), 0, 1, 1)
     display_text(
-        disp, " V-Shunt:  {:8.5f} V".format(ina219_info["ShuntV"]), 0, 2, 1)
+        disp, VSHUNT_TEXT.format(ina219_info["ShuntV"]), 0, 2, 1)
     display_text(
-        disp, " I-Shunt: {:7.3f}   A".format(ina219_info["ShuntC"]), 0, 3, 1)
+        disp, ISHUNT_TEXT.format(ina219_info["ShuntC"]), 0, 3, 1)
     display_text(
-        disp, "Powr-Cal:  {:8.5f} W".format(ina219_info["PowerCal"]), 0, 4, 1)
-    display_text(disp, "   Power:  {:6.3f}   W".format(
+        disp, POWERCALC_TEXT.format(ina219_info["PowerCal"]), 0, 4, 1)
+    display_text(disp, POWER_TEXT.format(
         ina219_info["PowerRegister"]), 0, 5, 1)
 
     disp.show()
@@ -93,34 +137,108 @@ pixels_char_w = oled_0.width/screen_w_chars
 pixels_char_h = oled_0.height/screen_h_lines
 
 displayPreviousTime = time.monotonic()
-displayInterval = 0.02    # Time in seconds
+displayIntervalDefault = 1.0  # Time in seconds
+displayInterval = 0.01   # Time in seconds
 
 update_display(oled_0, None)
 update_display(oled_1, None)
 time.sleep(3)
 
 powerPreviousTime = time.monotonic()
+powerIntervalDefault = 0.2  # Time in seconds
 powerInterval = 0.01    # Time in seconds
 
 oled_0
 
-meter_0 = get_ina219_info(ina219_0)
-meter_1 = get_ina219_info(ina219_1)
+meter_0 = get_ina219_data(ina219_0)
+meter_1 = get_ina219_data(ina219_1)
+
+output_json = True
+delimited_char = '\t'
+delformat = "{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}\t{}"
+
+display_enable = True
+serial_enable = False
+
+# print(usb_cdc.serials)
+
+if usb_cdc.data == None:
+    uart = usb_cdc.console
+else:
+    uart = usb_cdc.data
+    
+# uart.timeout = 0  # If 0, do not wait.
 
 while True:
-    if time.monotonic() - displayPreviousTime >= displayInterval:
+    in_lines = read_serial(uart).splitlines()
+    for in_text in in_lines:
+        if len(in_text) > 0:
+            in_text = in_text.lower()
+            # uart.write(bytearray(("RX: " + in_text + "\r\n").encode()))
+            print("RX: {0}".format(in_text))
+            if in_text == ".so." or in_text == ".os." or in_text == ".s.":
+                display_enable = False
+                serial_enable = True
+                powerInterval = 0.01
+                update_display(oled_0, None, "     Serial Mode")
+                update_display(oled_1, None, "     Serial Mode")
+                print("Serial Only")
+            elif in_text == ".sd." or in_text == ".ds.":
+                display_enable = True
+                serial_enable = True
+                displayInterval = displayIntervalDefault
+                powerInterval = powerIntervalDefault
+                print("Serial & Display")
+            elif in_text == ".do." or in_text == ".od." or in_text == ".d.":
+                display_enable = True
+                serial_enable = False
+                displayInterval = 0.1
+                print("Display Only")
+            elif in_text == ".oo." or in_text == ".o.":
+                display_enable = False
+                serial_enable = False
+                print("None - Stop")
+            elif in_text == ".j.":
+                output_json = True
+                print("JSON Output")
+            elif in_text == ".t.":
+                output_json = False
+                print("Text (Tab) Output")
+            elif in_text == ".findmeter.":
+                uart.write(bytearray((".METER-HERE.\r\n").encode()))
+            elif in_text == ".v.":
+                uart.write(bytearray(("{0}\r\n{1}\r\n".format(versionHW, versionSW).encode())))
+            else:
+                print("Unknown: {0}".format(in_text))
+
+    if display_enable and time.monotonic() - displayPreviousTime >= displayInterval:
         displayPreviousTime = time.monotonic()
+        if (not serial_enable):
+            meter_0_time = time.monotonic()
+            meter_0 = get_ina219_data(ina219_0)
+            meter_1_time = time.monotonic()
+            meter_1 = get_ina219_data(ina219_1)
 
         update_display(oled_0, meter_0)
         update_display(oled_1, meter_1)
 
-    if time.monotonic() - powerPreviousTime >= powerInterval:
+    if serial_enable and time.monotonic() - powerPreviousTime >= powerInterval:
         powerPreviousTime = time.monotonic()
 
         meter_0_time = time.monotonic()
-        meter_0 = get_ina219_info(ina219_0)
+        meter_0 = get_ina219_data(ina219_0)
         meter_1_time = time.monotonic()
-        meter_1 = get_ina219_info(ina219_1)
+        meter_1 = get_ina219_data(ina219_1)
 
-        print(json.dumps({"time": displayPreviousTime, "channel_1": meter_0, "channel_2": meter_1}))
-        # print("{:0.8f}\t{:0.8f}".format(time.monotonic(), meter_1_time - meter_0_time))
+        data = ""
+        if output_json:
+            data = json.dumps({"time": displayPreviousTime,
+                              "channel_1": meter_0, "channel_2": meter_1})
+        else:
+            data = delformat.format(displayPreviousTime,
+                                    meter_0["VIN_IN"], meter_0["VIN_OUT"], meter_0["ShuntV"],
+                                    meter_0["ShuntC"], meter_0["PowerCal"], meter_0["PowerRegister"],
+                                    meter_1["VIN_IN"], meter_1["VIN_OUT"], meter_1["ShuntV"],
+                                    meter_1["ShuntC"], meter_1["PowerCal"], meter_1["PowerRegister"])
+
+        uart.write(bytearray((data + "\r\n").encode()))
