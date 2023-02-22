@@ -38,7 +38,9 @@ def get_ina219_data(meter):
 
 # REF: https://stackoverflow.com/questions/65647986/how-to-do-non-blocking-usb-serial-input-in-circuit-python
 
+
 serialText = ""
+
 
 def read_serial(serial):
     global serialText
@@ -50,10 +52,7 @@ def read_serial(serial):
 
     serialText += text
 
-    # if len(serialText) > 0:
-    #    print("00 RX: {0}".format(serialText))
-
-    if(len(serialText)> 0 and not serialText.startswith(".")):
+    if (len(serialText) > 0 and not serialText.startswith(".")):
         print("Discarded: {0}".format(serialText))
         serialText = ""
 
@@ -61,8 +60,9 @@ def read_serial(serial):
         text = serialText.strip()
         serialText = ""
         return text
-   
+
     return ""
+
 
 CHANNEL_TEXT = "Channel"
 ONE_TEXT = "One"
@@ -73,6 +73,7 @@ VSHUNT_TEXT = " V-Shunt:  {:8.5f} V"
 ISHUNT_TEXT = " I-Shunt: {:7.3f}   A"
 POWERCALC_TEXT = "Powr-Cal:  {:8.5f} W"
 POWER_TEXT = "   Power:  {:6.3f}   W"
+
 
 def update_display(disp, ina219_info, s=""):
     if ina219_info is None:
@@ -172,27 +173,26 @@ while True:
     for in_text in in_lines:
         if len(in_text) > 0:
             in_text = in_text.lower()
-            # uart.write(bytearray(("RX: " + in_text + "\r\n").encode()))
-            print("RX: {0}".format(in_text))
-            if in_text in(".so.", ".os.", ".s."):
+            print(f"RX: {in_text}")
+            if in_text in (".so.", ".os.", ".s."):
                 display_enable = False
                 serial_enable = True
                 powerInterval = 0.01
                 update_display(oled_0, None, "     Serial Mode")
                 update_display(oled_1, None, "     Serial Mode")
                 print("Serial Only")
-            elif in_text in(".sd.", ".ds."):
+            elif in_text in (".sd.", ".ds."):
                 display_enable = True
                 serial_enable = True
                 displayInterval = displayIntervalDefault
                 powerInterval = powerIntervalDefault
                 print("Serial & Display")
-            elif in_text in(".do.", ".od.", ".d."):
+            elif in_text in (".do.", ".od.", ".d."):
                 display_enable = True
                 serial_enable = False
                 displayInterval = 0.1
                 print("Display Only")
-            elif in_text in(".oo.", ".o."):
+            elif in_text in (".oo.", ".o."):
                 display_enable = False
                 serial_enable = False
                 print("None - Stop")
@@ -205,13 +205,14 @@ while True:
             elif in_text == ".findmeter.":
                 uart.write(bytearray((".METER-HERE.\r\n").encode()))
             elif in_text == ".v.":
-                uart.write(bytearray(("{0}\r\n{1}\r\n".format(versionHW, versionSW).encode())))
+                uart.write(
+                    bytearray((f"{versionHW}\r\n{versionSW}\r\n".encode())))
             else:
-                print("Unknown: {0}".format(in_text))
+                print(f"Unknown: {in_text}")
 
     if display_enable and time.monotonic() - displayPreviousTime >= displayInterval:
         displayPreviousTime = time.monotonic()
-        if (not serial_enable):
+        if not serial_enable:
             meter_0_time = time.monotonic()
             meter_0 = get_ina219_data(ina219_0)
             meter_1_time = time.monotonic()
