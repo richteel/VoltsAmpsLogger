@@ -202,9 +202,12 @@ while True:
                 print("Text (Tab) Output")
             elif in_text == ".findmeter.":
                 uart.write(bytearray((".METER-HERE.\r\n").encode()))
+                print("Sent .METER-HERE.")
             elif in_text == ".v.":
                 uart.write(
-                    bytearray((f"{versionHW}\r\n{versionSW}\r\n".encode())))
+                    bytearray((f"{versionHW}\r\n".encode())))
+                uart.write(
+                    bytearray((f"{versionSW}\r\n".encode())))
             else:
                 print(f"Unknown: {in_text}")
 

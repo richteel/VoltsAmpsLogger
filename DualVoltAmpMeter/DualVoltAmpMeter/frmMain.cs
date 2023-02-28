@@ -15,6 +15,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Xml.Linq;
 using System.Windows.Forms.DataVisualization.Charting;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
 
 namespace DualVoltAmpMeter
 {
@@ -28,6 +29,8 @@ namespace DualVoltAmpMeter
         private const int VOLTAGE_2_SERIES_INDEX = 2;
         private const int CURRENT_2_SERIES_INDEX = 3;
 
+        private const int FINDMETER_WAIT_SECONDS = 10;
+
         /*********************************************************************************
          * Fields 
          *********************************************************************************/
@@ -36,6 +39,8 @@ namespace DualVoltAmpMeter
         private string _settingFile;
         private AppSettings _appSettings;
         private int _maxMeterReadings = 2048;
+        private DateTime _lastread = DateTime.MinValue;
+        private DateTime _findTimeout = DateTime.MinValue;
 
         /*********************************************************************************
          * Class Constructor 
@@ -169,6 +174,19 @@ namespace DualVoltAmpMeter
             File.WriteAllText(_settingFile, json);
         }
 
+        private void UpdateMeterConnectionInfo()
+        {
+            meterInfo1.UpdateInfo(_meterConnection);
+
+            string connStatus = (_meterConnection != null && _meterConnection.MeterConnected) ? "Connected" : "Not Connected";
+            if (_meterConnection != null && _meterConnection.ComPort != null)
+            {
+                Console.WriteLine("Meter Connection changed on " + _meterConnection.ComPort.Name + " to " + connStatus);
+            }
+
+            lblComStatus.Text = connStatus;
+            lblMeterFoundStatus.Text = (_meterConnection != null && _meterConnection.MeterConnected) ? "Meter on " + _meterConnection.ComPort.Name : "Meter not found";
+        }
 
         /*********************************************************************************
          * Event Handlers 
@@ -190,16 +208,21 @@ namespace DualVoltAmpMeter
         {
             timerFindMeter.Enabled = false;
 
-            if(_meterConnection != null && _meterConnection.MeterConnected)
+            if (_meterConnection != null && _meterConnection.MeterConnected)
             {
                 cmdFindMeter.Enabled = false;
                 return;
             }
 
+            timerUiUpdate.Enabled = false;
+            _lastread = DateTime.MinValue;
             cmdFindMeter.Enabled = false;
             this.Cursor = Cursors.WaitCursor;
 
             _meterConnection?.Dispose();
+            _meterConnection = null;
+
+            UpdateMeterConnectionInfo();
 
             if (_meterConnections.Count > 0)
             {
@@ -217,10 +240,13 @@ namespace DualVoltAmpMeter
                 MeterConnection mConn = new MeterConnection(port);
                 mConn.MeterReadingsMaxCount = _maxMeterReadings;
                 mConn.ConnectStatusChanged += Meter_ConnectedStatusChanged;
+                mConn.MeterInfoChanged += Meter_MeterInfoChanged;
 
-                mConn.CheckIfMeterIsConnected();
                 _meterConnections.Add(mConn);
+                mConn.CheckIfMeterIsConnected();
             }
+
+            _findTimeout = DateTime.Now.AddSeconds(FINDMETER_WAIT_SECONDS);
             timerFindMeter.Enabled = true;
         }
 
@@ -272,6 +298,7 @@ namespace DualVoltAmpMeter
             if (_meterConnection != null && _meterConnection.MeterConnected)
             {
                 _meterConnection.Dispose();
+                _meterConnection = null;
             }
 
             SaveSettings();
@@ -287,7 +314,7 @@ namespace DualVoltAmpMeter
                 loadDefaults = true;
             }
 
-            if(!loadDefaults)
+            if (!loadDefaults)
             {
                 using (StreamReader r = new StreamReader(_settingFile))
                 {
@@ -351,15 +378,41 @@ namespace DualVoltAmpMeter
 
         private void Meter_ConnectedStatusChanged(object sender, MeterConnectionEventArgs e)
         {
+            if (InvokeRequired || !IsHandleCreated)
+            {
+                Invoke(new Action<object, MeterConnectionEventArgs>(Meter_ConnectedStatusChanged), new object[] { sender, e });
+                return;
+            }
+
             string connStatus = e.Connected ? "Connected" : "Not Connected";
-            Console.WriteLine("Meter Connection changed on " + e.ComPort.Name + " to " + connStatus);
+            if (e.ComPort != null)
+            {
+                Console.WriteLine("Meter Connection changed on " + e.ComPort.Name + " to " + connStatus);
+            }
 
             lblComStatus.Text = connStatus;
             lblMeterFoundStatus.Text = e.Connected ? "Meter on " + e.ComPort.Name : "Meter not found";
         }
 
+        private void Meter_MeterInfoChanged(object sender, EventArgs e)
+        {
+            if (InvokeRequired || !IsHandleCreated)
+            {
+                Invoke(new Action<object, EventArgs>(Meter_MeterInfoChanged), new object[] { sender, e });
+                return;
+            }
+
+            UpdateMeterConnectionInfo();
+        }
+
         private void MeterChartSettings1_SettingsChanged(object sender, EventArgs e)
         {
+            if (InvokeRequired || !IsHandleCreated)
+            {
+                Invoke(new Action<object, EventArgs>(MeterChartSettings1_SettingsChanged), new object[] { sender, e });
+                return;
+            }
+
             ChartChangeScale();
         }
 
@@ -405,7 +458,7 @@ namespace DualVoltAmpMeter
         /// <param name="e">Event information related to this event.</param>
         private void SaveDataFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if(_meterConnection == null || _meterConnection.MeterReadings == null || _meterConnection.MeterReadings.Count == 0)
+            if (_meterConnection == null || _meterConnection.MeterReadings == null || _meterConnection.MeterReadings.Count == 0)
             {
                 MessageBox.Show(this, "No data to save.", "ERROR: No Data", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -433,7 +486,7 @@ namespace DualVoltAmpMeter
 
         private void TabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            meterInfo1.UpdateInfo(_meterConnection);
+            UpdateMeterConnectionInfo();
         }
 
         /// <summary>
@@ -466,15 +519,19 @@ namespace DualVoltAmpMeter
                 }
             }
 
+            if (_meterConnection == null && DateTime.Now < _findTimeout)
+            {
+                timerFindMeter.Enabled = true;
+                return;
+            }
+
             Console.WriteLine("Clearing Connections");
             _meterConnections.Clear();
 
-            if(_meterConnection == null)
+            if (_meterConnection == null)
             {
                 cmdFindMeter.Enabled = true;
             }
-
-            meterInfo1.UpdateInfo(_meterConnection);
 
             this.Cursor = Cursors.Default;
 
@@ -483,12 +540,20 @@ namespace DualVoltAmpMeter
                 _meterConnection.StartMonitoring();
                 timerUiUpdate.Enabled = true;
             }
+            else
+            {
+                MessageBox.Show(this, "Meter not found.\r\nClick the \"Find Meter\" button on " +
+                    "the \"Meter Info\" tab once the meter is connected to try again.", "Not Found",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            UpdateMeterConnectionInfo();
         }
 
         private void TimerUiUpdate_Tick(object sender, EventArgs e)
         {
             // If there is no data, return
-            if (_meterConnection.MeterReadings == null || _meterConnection.MeterReadings.Count == 0)
+            if (_meterConnection == null || _meterConnection.MeterReadings == null || _meterConnection.MeterReadings.Count == 0)
             {
                 return;
             }
@@ -520,8 +585,6 @@ namespace DualVoltAmpMeter
             channel2Volts.Points.Clear();
             channel2Current.Points.Clear();
 
-            int nextDataIndex = startDataIndex;
-
             for (int i = startDataIndex; i < _meterConnection.MeterReadings.Count; i++)
             {
                 Reading nextReading = _meterConnection.MeterReadings[i];
@@ -535,6 +598,19 @@ namespace DualVoltAmpMeter
 
             meterChannel1.Update(_meterConnection.MeterReadings[_meterConnection.MeterReadings.Count - 1].channel_1);
             meterChannel2.Update(_meterConnection.MeterReadings[_meterConnection.MeterReadings.Count - 1].channel_2);
+
+            _lastread = _meterConnection.MeterReadings[_meterConnection.MeterReadings.Count - 1].received;
+
+            // If no reading have been received in 10 seconds, then assume that the meter has been unplugged,
+            // so start looking for it again.
+            if ((DateTime.Now - _lastread).TotalSeconds > 10)
+            {
+                timerUiUpdate.Enabled = false;
+                _meterConnection.Dispose();
+                _meterConnection = null;
+
+                cmdFindMeter_Click(cmdFindMeter, null);
+            }
         }
     }
 }

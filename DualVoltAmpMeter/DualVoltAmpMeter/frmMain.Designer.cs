@@ -31,13 +31,13 @@ namespace DualVoltAmpMeter
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            DualVoltAmpMeter.Data.ChartSettings chartSettings1 = new DualVoltAmpMeter.Data.ChartSettings();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            DualVoltAmpMeter.Data.ChartSettings chartSettings1 = new DualVoltAmpMeter.Data.ChartSettings();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lblComStatus = new System.Windows.Forms.ToolStripStatusLabel();
@@ -59,18 +59,18 @@ namespace DualVoltAmpMeter
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabMeters = new System.Windows.Forms.TabPage();
+            this.meterChannel2 = new DualVoltAmpMeter.Controls.MeterDisplay();
+            this.meterChannel1 = new DualVoltAmpMeter.Controls.MeterDisplay();
             this.tabChartSettings = new System.Windows.Forms.TabPage();
+            this.meterChartSettings1 = new DualVoltAmpMeter.Controls.MeterChartSettings();
             this.tabMeterInfo = new System.Windows.Forms.TabPage();
             this.cmdFindMeter = new System.Windows.Forms.Button();
+            this.meterInfo1 = new DualVoltAmpMeter.Controls.MeterInfo();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.cmdPause = new System.Windows.Forms.Button();
             this.cmdHideShow = new System.Windows.Forms.Button();
             this.timerFindMeter = new System.Windows.Forms.Timer(this.components);
             this.timerUiUpdate = new System.Windows.Forms.Timer(this.components);
-            this.meterChannel2 = new DualVoltAmpMeter.Controls.MeterDisplay();
-            this.meterChannel1 = new DualVoltAmpMeter.Controls.MeterDisplay();
-            this.meterChartSettings1 = new DualVoltAmpMeter.Controls.MeterChartSettings();
-            this.meterInfo1 = new DualVoltAmpMeter.Controls.MeterInfo();
             this.saveFileData = new System.Windows.Forms.SaveFileDialog();
             this.saveFileChartImage = new System.Windows.Forms.SaveFileDialog();
             this.statusStrip1.SuspendLayout();
@@ -148,26 +148,26 @@ namespace DualVoltAmpMeter
             // saveDataFileToolStripMenuItem
             // 
             this.saveDataFileToolStripMenuItem.Name = "saveDataFileToolStripMenuItem";
-            this.saveDataFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveDataFileToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.saveDataFileToolStripMenuItem.Text = "Save &Data File";
             this.saveDataFileToolStripMenuItem.Click += new System.EventHandler(this.SaveDataFileToolStripMenuItem_Click);
             // 
             // saveChartImageToolStripMenuItem
             // 
             this.saveChartImageToolStripMenuItem.Name = "saveChartImageToolStripMenuItem";
-            this.saveChartImageToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveChartImageToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.saveChartImageToolStripMenuItem.Text = "Save &Chart Image";
             this.saveChartImageToolStripMenuItem.Click += new System.EventHandler(this.SaveChartImageToolStripMenuItem_Click);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(177, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(163, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
@@ -262,6 +262,36 @@ namespace DualVoltAmpMeter
             this.tabMeters.Text = "Meters";
             this.tabMeters.UseVisualStyleBackColor = true;
             // 
+            // meterChannel2
+            // 
+            this.meterChannel2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.meterChannel2.I_Shunt = 0D;
+            this.meterChannel2.Location = new System.Drawing.Point(3, 188);
+            this.meterChannel2.Name = "meterChannel2";
+            this.meterChannel2.Power = 0D;
+            this.meterChannel2.Powr_Cal = 0D;
+            this.meterChannel2.Size = new System.Drawing.Size(187, 185);
+            this.meterChannel2.TabIndex = 1;
+            this.meterChannel2.Title = "Channel 2";
+            this.meterChannel2.V_In = 0D;
+            this.meterChannel2.V_Out = 0D;
+            this.meterChannel2.V_Shunt = 0D;
+            // 
+            // meterChannel1
+            // 
+            this.meterChannel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.meterChannel1.I_Shunt = 0D;
+            this.meterChannel1.Location = new System.Drawing.Point(3, 3);
+            this.meterChannel1.Name = "meterChannel1";
+            this.meterChannel1.Power = 0D;
+            this.meterChannel1.Powr_Cal = 0D;
+            this.meterChannel1.Size = new System.Drawing.Size(187, 185);
+            this.meterChannel1.TabIndex = 0;
+            this.meterChannel1.Title = "Channel 1";
+            this.meterChannel1.V_In = 0D;
+            this.meterChannel1.V_Out = 0D;
+            this.meterChannel1.V_Shunt = 0D;
+            // 
             // tabChartSettings
             // 
             this.tabChartSettings.Controls.Add(this.meterChartSettings1);
@@ -272,6 +302,22 @@ namespace DualVoltAmpMeter
             this.tabChartSettings.TabIndex = 1;
             this.tabChartSettings.Text = "Chart Settings";
             this.tabChartSettings.UseVisualStyleBackColor = true;
+            // 
+            // meterChartSettings1
+            // 
+            this.meterChartSettings1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.meterChartSettings1.Location = new System.Drawing.Point(3, 3);
+            this.meterChartSettings1.Name = "meterChartSettings1";
+            chartSettings1.CurrentMax = 1D;
+            chartSettings1.CurrentMin = 0D;
+            chartSettings1.TimeMax = 0D;
+            chartSettings1.TimeMin = -20D;
+            chartSettings1.VoltageMax = 10D;
+            chartSettings1.VoltageMin = 0D;
+            this.meterChartSettings1.Settings = chartSettings1;
+            this.meterChartSettings1.Size = new System.Drawing.Size(187, 390);
+            this.meterChartSettings1.TabIndex = 0;
+            this.meterChartSettings1.SettingsChanged += new System.EventHandler<System.EventArgs>(this.MeterChartSettings1_SettingsChanged);
             // 
             // tabMeterInfo
             // 
@@ -294,6 +340,15 @@ namespace DualVoltAmpMeter
             this.cmdFindMeter.Text = "Find Meter";
             this.cmdFindMeter.UseVisualStyleBackColor = true;
             this.cmdFindMeter.Click += new System.EventHandler(this.cmdFindMeter_Click);
+            // 
+            // meterInfo1
+            // 
+            this.meterInfo1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.meterInfo1.Location = new System.Drawing.Point(0, 0);
+            this.meterInfo1.MeterConn = null;
+            this.meterInfo1.Name = "meterInfo1";
+            this.meterInfo1.Size = new System.Drawing.Size(193, 223);
+            this.meterInfo1.TabIndex = 0;
             // 
             // chart1
             // 
@@ -366,68 +421,13 @@ namespace DualVoltAmpMeter
             // 
             // timerFindMeter
             // 
-            this.timerFindMeter.Interval = 3000;
+            this.timerFindMeter.Interval = 500;
             this.timerFindMeter.Tick += new System.EventHandler(this.TimerFindMeter_Tick);
             // 
             // timerUiUpdate
             // 
             this.timerUiUpdate.Interval = 200;
             this.timerUiUpdate.Tick += new System.EventHandler(this.TimerUiUpdate_Tick);
-            // 
-            // meterChannel2
-            // 
-            this.meterChannel2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.meterChannel2.I_Shunt = 0D;
-            this.meterChannel2.Location = new System.Drawing.Point(3, 188);
-            this.meterChannel2.Name = "meterChannel2";
-            this.meterChannel2.Power = 0D;
-            this.meterChannel2.Powr_Cal = 0D;
-            this.meterChannel2.Size = new System.Drawing.Size(187, 185);
-            this.meterChannel2.TabIndex = 1;
-            this.meterChannel2.Title = "Channel 2";
-            this.meterChannel2.V_In = 0D;
-            this.meterChannel2.V_Out = 0D;
-            this.meterChannel2.V_Shunt = 0D;
-            // 
-            // meterChannel1
-            // 
-            this.meterChannel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.meterChannel1.I_Shunt = 0D;
-            this.meterChannel1.Location = new System.Drawing.Point(3, 3);
-            this.meterChannel1.Name = "meterChannel1";
-            this.meterChannel1.Power = 0D;
-            this.meterChannel1.Powr_Cal = 0D;
-            this.meterChannel1.Size = new System.Drawing.Size(187, 185);
-            this.meterChannel1.TabIndex = 0;
-            this.meterChannel1.Title = "Channel 1";
-            this.meterChannel1.V_In = 0D;
-            this.meterChannel1.V_Out = 0D;
-            this.meterChannel1.V_Shunt = 0D;
-            // 
-            // meterChartSettings1
-            // 
-            this.meterChartSettings1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.meterChartSettings1.Location = new System.Drawing.Point(3, 3);
-            this.meterChartSettings1.Name = "meterChartSettings1";
-            chartSettings1.CurrentMax = 1D;
-            chartSettings1.CurrentMin = 0D;
-            chartSettings1.TimeMax = 0D;
-            chartSettings1.TimeMin = -20D;
-            chartSettings1.VoltageMax = 10D;
-            chartSettings1.VoltageMin = 0D;
-            this.meterChartSettings1.Settings = chartSettings1;
-            this.meterChartSettings1.Size = new System.Drawing.Size(187, 390);
-            this.meterChartSettings1.TabIndex = 0;
-            this.meterChartSettings1.SettingsChanged += new System.EventHandler<System.EventArgs>(this.MeterChartSettings1_SettingsChanged);
-            // 
-            // meterInfo1
-            // 
-            this.meterInfo1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.meterInfo1.Location = new System.Drawing.Point(0, 0);
-            this.meterInfo1.MeterConn = null;
-            this.meterInfo1.Name = "meterInfo1";
-            this.meterInfo1.Size = new System.Drawing.Size(193, 223);
-            this.meterInfo1.TabIndex = 0;
             // 
             // saveFileData
             // 

@@ -70,27 +70,30 @@ namespace DualVoltAmpMeter.Controls
             infoText.Append("Status: ");
             infoText.AppendLine(_meterConn.MeterConnected ? "Connected" : "Not Connected");
 
-            infoText.Append("COM Port: ");
-            infoText.AppendLine(_meterConn.MeterSerialPort.PortName);
+            if (_meterConn.MeterConnected)
+            {
+                infoText.Append("COM Port: ");
+                infoText.AppendLine(_meterConn.MeterSerialPort.PortName);
 
-            infoText.Append("Hardware Version: ");
-            if (_meterConn.MeterVersionHardware == null)
-            {
-                infoText.AppendLine();
-            }
-            else
-            {
-                infoText.AppendLine(_meterConn.MeterVersionHardware.Substring(3));
-            }
+                infoText.Append("Hardware Version: ");
+                if (_meterConn.MeterVersionHardware == null)
+                {
+                    infoText.AppendLine();
+                }
+                else
+                {
+                    infoText.AppendLine(_meterConn.MeterVersionHardware.Substring(3));
+                }
 
-            infoText.Append("Software Version: ");
-            if (_meterConn.MeterVersionSoftware == null)
-            {
-                infoText.AppendLine();
-            }
-            else
-            {
-                infoText.AppendLine(_meterConn.MeterVersionSoftware.Substring(3));
+                infoText.Append("Software Version: ");
+                if (_meterConn.MeterVersionSoftware == null)
+                {
+                    infoText.AppendLine();
+                }
+                else
+                {
+                    infoText.AppendLine(_meterConn.MeterVersionSoftware.Substring(3));
+                }
             }
 
             txtInformation.Text = infoText.ToString();

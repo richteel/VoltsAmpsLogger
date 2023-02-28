@@ -59,8 +59,8 @@ namespace DualVoltAmpMeter.Comms
 
             _serialPort = new SerialPort(_comPort.Name)
             {
-                ReadTimeout = 2000,
-                WriteTimeout = 2000,
+                ReadTimeout = 5000,
+                WriteTimeout = 5000,
                 // These two required for Raspberry Pico
                 // https://forum.arduino.cc/t/solved-c-win10-serial-terminal-not-receive-strings-from-pico-arduino-ide/1080783/4
                 DtrEnable = true,
@@ -137,6 +137,12 @@ namespace DualVoltAmpMeter.Comms
                 Console.WriteLine(ex.Message);
                 return false;
             }
+            catch (System.IO.IOException ex)
+            {
+                _errorMessage = string.Format("ERROR: {0} Port is in use.", _comPort.Name);
+                Console.WriteLine(ex.Message);
+                return false;
+            }
 
             return _serialPort.IsOpen;
         }
@@ -166,6 +172,8 @@ namespace DualVoltAmpMeter.Comms
             try
             {
                 data = port.ReadLine().Trim();
+                Console.WriteLine("COM Port: " + _comPort.Name);
+                Console.WriteLine("Received: " + data);
             }
             catch (System.IO.IOException ex)
             {
@@ -192,11 +200,13 @@ namespace DualVoltAmpMeter.Comms
             else if (data.StartsWith("HW "))
             {
                 _meterVersionHardware = data;
+                OnMeterInfoChanged();
                 return;
             }
             else if (data.StartsWith("SW "))
             {
                 _meterVersionSoftware = data;
+                OnMeterInfoChanged();
                 return;
             }
 
@@ -218,6 +228,7 @@ namespace DualVoltAmpMeter.Comms
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                Console.WriteLine("Received " + data);
             }
         }
 
@@ -290,7 +301,25 @@ namespace DualVoltAmpMeter.Comms
             EventHandler<MeterConnectionEventArgs> handler = ConnectStatusChanged;
             if (handler != null)
             {
-                handler(this, new MeterConnectionEventArgs() { Connected = _meterConnected, ComPort = _comPort });
+                // handler(this, new MeterConnectionEventArgs() { Connected = _meterConnected, ComPort = _comPort });
+                handler.BeginInvoke(this,
+                    new MeterConnectionEventArgs() { Connected = _meterConnected, ComPort = _comPort }, null, null);
+            }
+        }
+
+        public event EventHandler<EventArgs> MeterInfoChanged;
+        private void OnMeterInfoChanged()
+        {
+            if (_disposedValue)
+            {
+                return;
+            }
+
+            EventHandler<EventArgs> handler = MeterInfoChanged;
+            if (handler != null)
+            {
+                // handler(this, new EventArgs() { });
+                handler.BeginInvoke(this, new EventArgs(), null, null);
             }
         }
     }
