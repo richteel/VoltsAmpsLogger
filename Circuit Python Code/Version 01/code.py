@@ -36,7 +36,8 @@ def get_ina219_data(meter):
             "PowerCal": (bus_voltage * (current / 1000)),
             "PowerRegister": power}
 
-# REF: https://stackoverflow.com/questions/65647986/how-to-do-non-blocking-usb-serial-input-in-circuit-python
+# REF: https://stackoverflow.com/
+#       questions/65647986/how-to-do-non-blocking-usb-serial-input-in-circuit-python
 
 
 serialText = ""
