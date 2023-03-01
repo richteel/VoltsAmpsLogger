@@ -30,14 +30,14 @@ print(f"  shunt_adc_resolution: {ina219_1.shunt_adc_resolution}")
 print(f"  mode:                 {ina219_1.mode}")
 print("")
 
-# optional : change configuration to use 32 samples averaging 
+# optional : change configuration to use 32 samples averaging
 # for both bus voltage and shunt voltage
 ina219_0.bus_adc_resolution = adafruit_ina219.ADCResolution.ADCRES_12BIT_32S
 ina219_0.shunt_adc_resolution = adafruit_ina219.ADCResolution.ADCRES_12BIT_32S
 # optional : change voltage range to 16V
 ina219_0.bus_voltage_range = adafruit_ina219.BusVoltageRange.RANGE_16V
 
-# optional : change configuration to use 32 samples averaging 
+# optional : change configuration to use 32 samples averaging
 # for both bus voltage and shunt voltage
 ina219_1.bus_adc_resolution = adafruit_ina219.ADCResolution.ADCRES_12BIT_32S
 ina219_1.shunt_adc_resolution = adafruit_ina219.ADCResolution.ADCRES_12BIT_32S
@@ -52,7 +52,7 @@ while True:
     current_0 = ina219_0.current  # current in mA
     power_0 = ina219_0.power  # power in watts
 
-    # INA219 measure bus voltage on the load side. 
+    # INA219 measure bus voltage on the load side.
     # So PSU voltage = bus_voltage + shunt_voltage
     print("CHANNEL 1")
     print(f"Voltage (VIN+) : {(bus_voltage_0 + shunt_voltage_0):6.3f}   V")
@@ -74,7 +74,7 @@ while True:
     current_1 = ina219_1.current  # current in mA
     power_1 = ina219_1.power  # power in watts
 
-    # INA219 measure bus voltage on the load side. 
+    # INA219 measure bus voltage on the load side.
     # So PSU voltage = bus_voltage + shunt_voltage
     print("CHANNEL 2")
     print(f"Voltage (VIN+) : {(bus_voltage_1 + shunt_voltage_1):6.3f}   V")
