@@ -14,8 +14,8 @@ import busio
 
 # To use default I2C bus (most boards)
 # i2c = board.I2C()  # uses board.SCL and board.SDA
-#i2c0 = busio.I2C(board.GP15, board.GP14)
-#i2c1 = busio.I2C(board.GP17, board.GP16)
+# i2c0 = busio.I2C(board.GP15, board.GP14)
+# i2c1 = busio.I2C(board.GP17, board.GP16)
 i2c0 = busio.I2C(board.GP15, board.GP14, frequency=400_000)
 i2c1 = busio.I2C(board.GP17, board.GP16, frequency=400_000)
 
