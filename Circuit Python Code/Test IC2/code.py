@@ -26,11 +26,9 @@ i2c1 = busio.I2C(board.GP17, board.GP16, frequency=400_000)
 
 while not i2c0.try_lock():
     print("Locking IC2 Bus 0")
-    pass
 
 while not i2c1.try_lock():
     print("Locking IC2 Bus 1")
-    pass
 
 try:
     while True:
