@@ -11,19 +11,23 @@ namespace DualVoltAmpMeter.Data
     {
         public static ConnectionOptions ProcessConnectionOptions()
         {
-            ConnectionOptions options = new ConnectionOptions();
-            options.Impersonation = ImpersonationLevel.Impersonate;
-            options.Authentication = AuthenticationLevel.Default;
-            options.EnablePrivileges = true;
+            ConnectionOptions options = new ConnectionOptions()
+            {
+                Impersonation = ImpersonationLevel.Impersonate,
+                Authentication = AuthenticationLevel.Default,
+                EnablePrivileges = true
+            };
 
             return options;
         }
 
         public static ManagementScope ConnectionScope(string machineName, ConnectionOptions options, string path)
         {
-            ManagementScope connectScope = new ManagementScope();
-            connectScope.Path = new ManagementPath(@"\\" + machineName + path);
-            connectScope.Options = options;
+            ManagementScope connectScope = new ManagementScope()
+            {
+                Path = new ManagementPath(@"\\" + machineName + path),
+                Options = options
+            };
             connectScope.Connect();
 
             return connectScope;
@@ -60,10 +64,12 @@ namespace DualVoltAmpMeter.Data
                             caption = captionObj.ToString();
                             if (caption.Contains("(COM"))
                             {
-                                ComPortItem comPortInfo = new ComPortItem();
-                                comPortInfo.Name = caption.Substring(caption.LastIndexOf("(COM")).Replace("(", string.Empty).Replace(")",
-                                                                     string.Empty);
-                                comPortInfo.Description = caption;
+                                ComPortItem comPortInfo = new ComPortItem() {
+                                    Name = caption.Substring(
+                                                                caption.LastIndexOf("(COM")).Replace("(", string.Empty).Replace(")",
+                                                                string.Empty),
+                                    Description = caption
+                                };
                                 comPortInfoList.Add(comPortInfo);
                             }
                         }

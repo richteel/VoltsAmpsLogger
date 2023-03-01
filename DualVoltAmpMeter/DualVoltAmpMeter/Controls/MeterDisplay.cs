@@ -7,8 +7,8 @@ namespace DualVoltAmpMeter.Controls
     {
         public string Title
         {
-            get { return lblChannel.Text; }
-            set { lblChannel.Text = value; }
+            get => lblChannel.Text;
+            set => lblChannel.Text = value;
         }
 
         public double V_In
@@ -19,10 +19,7 @@ namespace DualVoltAmpMeter.Controls
 
                 return i;
             }
-            set
-            {
-                txtVin.Text = value.ToString();
-            }
+            set => txtVin.Text = value.ToString();
         }
 
         public double V_Out
@@ -33,10 +30,7 @@ namespace DualVoltAmpMeter.Controls
 
                 return i;
             }
-            set
-            {
-                txtVout.Text = value.ToString();
-            }
+            set => txtVout.Text = value.ToString();
         }
 
         public double V_Shunt
@@ -47,10 +41,7 @@ namespace DualVoltAmpMeter.Controls
 
                 return i;
             }
-            set
-            {
-                txtVshunt.Text = value.ToString();
-            }
+            set => txtVshunt.Text = value.ToString();
         }
 
         public double I_Shunt
@@ -61,10 +52,7 @@ namespace DualVoltAmpMeter.Controls
 
                 return i;
             }
-            set
-            {
-                txtIshunt.Text = value.ToString();
-            }
+            set => txtIshunt.Text = value.ToString();
         }
 
         public double Powr_Cal
@@ -75,10 +63,7 @@ namespace DualVoltAmpMeter.Controls
 
                 return i;
             }
-            set
-            {
-                txtPowrCal.Text = value.ToString();
-            }
+            set => txtPowrCal.Text = value.ToString();
         }
 
         public double Power
@@ -89,10 +74,7 @@ namespace DualVoltAmpMeter.Controls
 
                 return i;
             }
-            set
-            {
-                txtPower.Text = value.ToString();
-            }
+            set => txtPower.Text = value.ToString();
         }
 
         public MeterDisplay()

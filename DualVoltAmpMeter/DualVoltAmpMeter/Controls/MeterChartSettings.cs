@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using DualVoltAmpMeter.Data;
 
@@ -17,14 +12,23 @@ namespace DualVoltAmpMeter.Controls
         {
             get
             {
+                double timeMin, timeMax, voltageMin, voltageMax, currentMin, currentMax;
+
+                double.TryParse(txtTimeMin.Text, out timeMin);
+                double.TryParse(txtTimeMax.Text, out timeMax);
+                double.TryParse(txtVoltageMin.Text, out voltageMin);
+                double.TryParse(txtVoltageMax.Text, out voltageMax);
+                double.TryParse(txtCurrentMin.Text, out currentMin);
+                double.TryParse(txtCurrentMax.Text, out currentMax);
+
                 return new ChartSettings()
                 {
-                    TimeMin = double.Parse(txtTimeMin.Text),
-                    TimeMax = double.Parse(txtTimeMax.Text),
-                    VoltageMin = double.Parse(txtVoltageMin.Text),
-                    VoltageMax = double.Parse(txtVoltageMax.Text),
-                    CurrentMin = double.Parse(txtCurrentMin.Text),
-                    CurrentMax = double.Parse(txtCurrentMax.Text),
+                    TimeMin = timeMin,
+                    TimeMax = timeMax,
+                    VoltageMin = voltageMin,
+                    VoltageMax = voltageMax,
+                    CurrentMin = currentMin,
+                    CurrentMax = currentMax,
                 };
             }
             set
@@ -73,16 +77,16 @@ namespace DualVoltAmpMeter.Controls
             if (isMin)
             {
                 lblChartMinMaxError.Text = string.Format("ERROR: Min must be less than max for: {0}", item);
-                min = double.Parse(txtBox.Text);
+                double.TryParse(txtBox.Text, out min);
                 TextBox txtBox2 = (TextBox)this.Controls.Find(txtBox.Name.Replace("Min", "Max"), true).FirstOrDefault();
-                max = double.Parse(txtBox2.Text);
+                double.TryParse(txtBox2.Text, out max);
             }
             else
             {
                 lblChartMinMaxError.Text = string.Format("ERROR: Max must be greater than min for: {0}", item);
-                max = double.Parse(txtBox.Text);
+                double.TryParse(txtBox.Text, out max);
                 TextBox txtBox2 = (TextBox)this.Controls.Find(txtBox.Name.Replace("Max", "Min"), true).FirstOrDefault();
-                min = double.Parse(txtBox2.Text);
+                double.TryParse(txtBox2.Text, out min);
             }
 
             if (min > max || min == max)

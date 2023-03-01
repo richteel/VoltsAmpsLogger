@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DualVoltAmpMeter
@@ -43,10 +38,7 @@ namespace DualVoltAmpMeter
 
         public string AssemblyVersion
         {
-            get
-            {
-                return Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            }
+            get => Assembly.GetExecutingAssembly().GetName().Version.ToString();
         }
 
         public string AssemblyDescription

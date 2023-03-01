@@ -51,12 +51,12 @@ while True:
 
     # INA219 measure bus voltage on the load side. So PSU voltage = bus_voltage + shunt_voltage
     print("CHANNEL 1")
-    print("Voltage (VIN+) : {:6.3f}   V".format(bus_voltage_0 + shunt_voltage_0))
-    print("Voltage (VIN-) : {:6.3f}   V".format(bus_voltage_0))
-    print("Shunt Voltage  : {:8.5f} V".format(shunt_voltage_0))
-    print("Shunt Current  : {:7.4f}  A".format(current_0 / 1000))
-    print("Power Calc.    : {:8.5f} W".format(bus_voltage_0 * (current_0 / 1000)))
-    print("Power Register : {:6.3f}   W".format(power_0))
+    print(f"Voltage (VIN+) : {(bus_voltage_0 + shunt_voltage_0):6.3f}   V")
+    print(f"Voltage (VIN-) : {bus_voltage_0:6.3f}   V")
+    print(f"Shunt Voltage  : {shunt_voltage_0:8.5f} V")
+    print(f"Shunt Current  : {(current_0 / 1000):7.4f}  A")
+    print(f"Power Calc.    : {(bus_voltage_0 * (current_0 / 1000)):8.5f} W")
+    print(f"Power Register : {power_0:6.3f}   W")
     print("")
 
     # Check internal calculations haven't overflowed (doesn't detect ADC overflows)
@@ -72,12 +72,12 @@ while True:
 
     # INA219 measure bus voltage on the load side. So PSU voltage = bus_voltage + shunt_voltage    
     print("CHANNEL 2")
-    print("Voltage (VIN+) : {:6.3f}   V".format(bus_voltage_1 + shunt_voltage_1))
-    print("Voltage (VIN-) : {:6.3f}   V".format(bus_voltage_1))
-    print("Shunt Voltage  : {:8.5f} V".format(shunt_voltage_1))
-    print("Shunt Current  : {:7.4f}  A".format(current_1 / 1000))
-    print("Power Calc.    : {:8.5f} W".format(bus_voltage_1 * (current_1 / 1000)))
-    print("Power Register : {:6.3f}   W".format(power_1))
+    print(f"Voltage (VIN+) : {(bus_voltage_1 + shunt_voltage_1):6.3f}   V")
+    print(f"Voltage (VIN-) : {bus_voltage_1:6.3f}   V")
+    print(f"Shunt Voltage  : {shunt_voltage_1:8.5f} V")
+    print(f"Shunt Current  : {(current_1 / 1000):7.4f}  A")
+    print(f"Power Calc.    : {(bus_voltage_1 * (current_1 / 1000)):8.5f} W")
+    print(f"Power Register : {power_1:6.3f}   W")
     print("")
 
     # Check internal calculations haven't overflowed (doesn't detect ADC overflows)

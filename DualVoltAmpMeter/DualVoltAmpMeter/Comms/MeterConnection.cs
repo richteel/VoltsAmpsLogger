@@ -1,13 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
 using System.IO.Ports;
 using DualVoltAmpMeter.Data;
-using System.Reflection.Emit;
-using System.Windows.Forms;
 using System.Text.Json;
 
 namespace DualVoltAmpMeter.Comms
@@ -23,7 +17,6 @@ namespace DualVoltAmpMeter.Comms
         private string _meterVersionHardware;
         private string _meterVersionSoftware;
         private List<Reading> _readings;
-        private int _readingsMaxCount;
         private SerialPort _serialPort;
 
         // To detect redundant calls
@@ -37,11 +30,7 @@ namespace DualVoltAmpMeter.Comms
         public string ErrorMessage => _errorMessage;
         public bool MeterConnected => _meterConnected;
         public List<Reading> MeterReadings => _readings;
-        public int MeterReadingsMaxCount
-        {
-            get { return _readingsMaxCount; }
-            set { _readingsMaxCount = value; }
-        }
+        public int MeterReadingsMaxCount { get; set; }
         public SerialPort MeterSerialPort => _serialPort;
         public string MeterVersionHardware => _meterVersionHardware;
         public string MeterVersionSoftware => _meterVersionSoftware;
@@ -84,19 +73,13 @@ namespace DualVoltAmpMeter.Comms
         {
             if (!_disposedValue)
             {
-                if (disposing)
+                if (Connect())
                 {
-                    // TODO: dispose managed state (managed objects)
+                    SendData(".do.");
+
+                    _serialPort.Close();
                 }
-
-                if (!Connect())
-                {
-                    return;
-                }
-
-                SendData(".do.");
-
-                _serialPort.Close();
+                
                 _serialPort = null;
 
                 _disposedValue = true;
@@ -197,13 +180,13 @@ namespace DualVoltAmpMeter.Comms
                 SendData(".v.");
                 return;
             }
-            else if (data.StartsWith("HW "))
+            if (data.StartsWith("HW "))
             {
                 _meterVersionHardware = data;
                 OnMeterInfoChanged();
                 return;
             }
-            else if (data.StartsWith("SW "))
+            if (data.StartsWith("SW "))
             {
                 _meterVersionSoftware = data;
                 OnMeterInfoChanged();
@@ -220,7 +203,7 @@ namespace DualVoltAmpMeter.Comms
                 _readings.Add(dataObj);
 
                 // Limit the number of items in the ArrayList
-                while (_readings.Count > _readingsMaxCount)
+                while (_readings.Count > MeterReadingsMaxCount)
                 {
                     _readings.RemoveAt(0);
                 }
@@ -322,11 +305,5 @@ namespace DualVoltAmpMeter.Comms
                 handler.BeginInvoke(this, new EventArgs(), null, null);
             }
         }
-    }
-
-    public class MeterConnectionEventArgs : EventArgs
-    {
-        public bool Connected { get; set; }
-        public ComPortItem ComPort { get; set; }
     }
 }

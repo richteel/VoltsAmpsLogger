@@ -2,20 +2,11 @@
 using DualVoltAmpMeter.Data;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Xml.Linq;
 using System.Windows.Forms.DataVisualization.Charting;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
 
 namespace DualVoltAmpMeter
 {
@@ -237,8 +228,9 @@ namespace DualVoltAmpMeter
 
             foreach (ComPortItem port in ports)
             {
-                MeterConnection mConn = new MeterConnection(port);
-                mConn.MeterReadingsMaxCount = _maxMeterReadings;
+                MeterConnection mConn = new MeterConnection(port) {
+                    MeterReadingsMaxCount = _maxMeterReadings
+                };
                 mConn.ConnectStatusChanged += Meter_ConnectedStatusChanged;
                 mConn.MeterInfoChanged += Meter_MeterInfoChanged;
 
@@ -273,14 +265,7 @@ namespace DualVoltAmpMeter
         {
             timerUiUpdate.Enabled = !timerUiUpdate.Enabled;
 
-            if (timerUiUpdate.Enabled)
-            {
-                cmdPause.Text = "Pause";
-            }
-            else
-            {
-                cmdPause.Text = "Resume";
-            }
+            cmdPause.Text = timerUiUpdate.Enabled? "Pause" : "Resume";
         }
 
         /// <summary>
@@ -445,7 +430,7 @@ namespace DualVoltAmpMeter
                         chart1.SaveImage(saveFileChartImage.FileName, ChartImageFormat.Tiff);
                         break;
                     default:    // Unknown
-                        throw new NotImplementedException();
+                        throw new IndexOutOfRangeException();
                 }
             }
         }
@@ -479,7 +464,7 @@ namespace DualVoltAmpMeter
                         SaveDataFileJson(saveFileData.FileName);
                         break;
                     default:    // Unknown
-                        throw new NotImplementedException();
+                        throw new IndexOutOfRangeException();
                 }
             }
         }

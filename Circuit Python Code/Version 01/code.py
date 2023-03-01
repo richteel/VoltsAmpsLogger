@@ -53,7 +53,7 @@ def read_serial(serial):
     serialText += text
 
     if (len(serialText) > 0 and not serialText.startswith(".")):
-        print("Discarded: {0}".format(serialText))
+        print(f"Discarded: {serialText}")
         serialText = ""
 
     if "\n" in serialText or "\r" in serialText:

@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 using System.Windows.Forms;
 using DualVoltAmpMeter.Comms;
-using DualVoltAmpMeter.Data;
 
 namespace DualVoltAmpMeter.Controls
 {
@@ -24,7 +16,7 @@ namespace DualVoltAmpMeter.Controls
          *********************************************************************************/
         public MeterConnection MeterConn
         {
-            get { return _meterConn; }
+            get => _meterConn;
             set
             {
                 _meterConn = value;

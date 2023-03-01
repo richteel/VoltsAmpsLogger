@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Comms\MeterConnection.cs" />
+    <Compile Include="Comms\MeterConnectionEventArgs.cs" />
     <Compile Include="Controls\MeterChartSettings.cs">
       <SubType>UserControl</SubType>
     </Compile>
