@@ -14,20 +14,20 @@ print("ina219 test")
 
 # display some of the advanced field (just to test)
 print("Config register Channel 1:")
-print("  bus_voltage_range:    0x%1X" % ina219_0.bus_voltage_range)
-print("  gain:                 0x%1X" % ina219_0.gain)
-print("  bus_adc_resolution:   0x%1X" % ina219_0.bus_adc_resolution)
-print("  shunt_adc_resolution: 0x%1X" % ina219_0.shunt_adc_resolution)
-print("  mode:                 0x%1X" % ina219_0.mode)
+print(f"  bus_voltage_range:    {ina219_0.bus_voltage_range}")
+print(f"  gain:                 {ina219_0.gain}")
+print(f"  bus_adc_resolution:   {ina219_0.bus_adc_resolution}")
+print(f"  shunt_adc_resolution: {ina219_0.shunt_adc_resolution}")
+print(f"  mode:                 {ina219_0.mode}")
 print("")
 
 # display some of the advanced field (just to test)
 print("Config register Channel 2:")
-print("  bus_voltage_range:    0x%1X" % ina219_1.bus_voltage_range)
-print("  gain:                 0x%1X" % ina219_1.gain)
-print("  bus_adc_resolution:   0x%1X" % ina219_1.bus_adc_resolution)
-print("  shunt_adc_resolution: 0x%1X" % ina219_1.shunt_adc_resolution)
-print("  mode:                 0x%1X" % ina219_1.mode)
+print(f"  bus_voltage_range:    {ina219_1.bus_voltage_range}")
+print(f"  gain:                 {ina219_1.gain}")
+print(f"  bus_adc_resolution:   {ina219_1.bus_adc_resolution}")
+print(f"  shunt_adc_resolution: {ina219_1.shunt_adc_resolution}")
+print(f"  mode:                 {ina219_1.mode}")
 print("")
 
 # optional : change configuration to use 32 samples averaging for both bus voltage and shunt voltage
@@ -45,7 +45,8 @@ ina219_1.bus_voltage_range = adafruit_ina219.BusVoltageRange.RANGE_16V
 # measure and display loop
 while True:
     bus_voltage_0 = ina219_0.bus_voltage  # voltage on V- (load side)
-    shunt_voltage_0 = ina219_0.shunt_voltage  # voltage between V+ and V- across the shunt
+    # voltage between V+ and V- across the shunt
+    shunt_voltage_0 = ina219_0.shunt_voltage
     current_0 = ina219_0.current  # current in mA
     power_0 = ina219_0.power  # power in watts
 
@@ -64,13 +65,13 @@ while True:
         print("Internal Math Overflow Detected!")
         print("")
 
-
     bus_voltage_1 = ina219_1.bus_voltage  # voltage on V- (load side)
-    shunt_voltage_1 = ina219_1.shunt_voltage  # voltage between V+ and V- across the shunt
+    # voltage between V+ and V- across the shunt
+    shunt_voltage_1 = ina219_1.shunt_voltage
     current_1 = ina219_1.current  # current in mA
     power_1 = ina219_1.power  # power in watts
 
-    # INA219 measure bus voltage on the load side. So PSU voltage = bus_voltage + shunt_voltage    
+    # INA219 measure bus voltage on the load side. So PSU voltage = bus_voltage + shunt_voltage
     print("CHANNEL 2")
     print(f"Voltage (VIN+) : {(bus_voltage_1 + shunt_voltage_1):6.3f}   V")
     print(f"Voltage (VIN-) : {bus_voltage_1:6.3f}   V")
