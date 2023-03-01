@@ -127,9 +127,11 @@ ina219_1.set_calibration_16V_400mA()
 displayio.release_displays()
 
 oled_0 = adafruit_ssd1306.SSD1306_I2C(
-    width=128, height=64, i2c=i2c_0, reset=digitalio.DigitalInOut(board.GP13), addr=0x3d)
+    width=128, height=64, i2c=i2c_0, reset=digitalio.DigitalInOut(board.GP13),
+    addr=0x3d)
 oled_1 = adafruit_ssd1306.SSD1306_I2C(
-    width=128, height=64, i2c=i2c_1, reset=digitalio.DigitalInOut(board.GP18), addr=0x3d)
+    width=128, height=64, i2c=i2c_1, reset=digitalio.DigitalInOut(board.GP18),
+    addr=0x3d)
 
 screen_w_chars = 21
 screen_h_lines = 6
@@ -236,9 +238,13 @@ while True:
                               "channel_1": meter_0, "channel_2": meter_1})
         else:
             data = delformat.format(displayPreviousTime,
-                                    meter_0["VIN_IN"], meter_0["VIN_OUT"], meter_0["ShuntV"],
-                                    meter_0["ShuntC"], meter_0["PowerCal"], meter_0["PowerRegister"],
-                                    meter_1["VIN_IN"], meter_1["VIN_OUT"], meter_1["ShuntV"],
-                                    meter_1["ShuntC"], meter_1["PowerCal"], meter_1["PowerRegister"])
+                                    meter_0["VIN_IN"], meter_0["VIN_OUT"],
+                                    meter_0["ShuntV"],
+                                    meter_0["ShuntC"], meter_0["PowerCal"],
+                                    meter_0["PowerRegister"],
+                                    meter_1["VIN_IN"], meter_1["VIN_OUT"],
+                                    meter_1["ShuntV"],
+                                    meter_1["ShuntC"], meter_1["PowerCal"],
+                                    meter_1["PowerRegister"])
 
         uart.write(bytearray((data + "\r\n").encode()))

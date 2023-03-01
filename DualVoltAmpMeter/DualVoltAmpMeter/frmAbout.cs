@@ -32,13 +32,13 @@ namespace DualVoltAmpMeter
                         return titleAttribute.Title;
                     }
                 }
-                return System.IO.Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().CodeBase);
+                return System.IO.Path.GetFileNameWithoutExtension(typeof(frmAbout).Assembly.CodeBase);
             }
         }
 
         public string AssemblyVersion
         {
-            get => Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            get => typeof(frmAbout).Assembly.GetName().Version.ToString();
         }
 
         public string AssemblyDescription

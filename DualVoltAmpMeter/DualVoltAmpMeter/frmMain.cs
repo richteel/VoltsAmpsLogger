@@ -430,7 +430,7 @@ namespace DualVoltAmpMeter
                         chart1.SaveImage(saveFileChartImage.FileName, ChartImageFormat.Tiff);
                         break;
                     default:    // Unknown
-                        throw new Exception("Unknown FilterIndex while saving chart image file");
+                        throw new ArgumentException("Unknown FilterIndex while saving chart image file");
                 }
             }
         }
@@ -464,7 +464,7 @@ namespace DualVoltAmpMeter
                         SaveDataFileJson(saveFileData.FileName);
                         break;
                     default:    // Unknown
-                        throw new Exception("Unknown FilterIndex while saving data file");
+                        throw new ArgumentException("Unknown FilterIndex while saving data file");
                 }
             }
         }

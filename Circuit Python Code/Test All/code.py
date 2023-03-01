@@ -45,9 +45,11 @@ ina219_1.set_calibration_16V_400mA()
 
 # ***** SETUP DISPLAY *****
 oled_0 = adafruit_ssd1306.SSD1306_I2C(
-    width=128, height=64, i2c=i2c_0, reset=digitalio.DigitalInOut(board.GP13), addr=0x3d)
+    width=128, height=64, i2c=i2c_0, reset=digitalio.DigitalInOut(board.GP13),
+    addr=0x3d)
 oled_1 = adafruit_ssd1306.SSD1306_I2C(
-    width=128, height=64, i2c=i2c_1, reset=digitalio.DigitalInOut(board.GP18), addr=0x3d)
+    width=128, height=64, i2c=i2c_1, reset=digitalio.DigitalInOut(board.GP18),
+    addr=0x3d)
 
 oled_test_1 = True
 displayPreviousTime = time.monotonic()
@@ -60,7 +62,9 @@ powerPreviousTime = time.monotonic()
 powerInterval = 0.2    # Time in seconds
 
 # Print data headers
-print("TIME\tVIN_IN_1\tVIN_OUT_1\tShuntV_1\tShuntC_1\tPowerCal_1\tPowerRegister_1\tVIN_IN_2\tVIN_OUT_2\tShuntV_2\tShuntC_2\tPowerCal_2\tPowerRegister_2")
+print("TIME\tVIN_IN_1\tVIN_OUT_1\tShuntV_1\tShuntC_1\tPowerCal_1\t" +
+      "PowerRegister_1\tVIN_IN_2\tVIN_OUT_2\tShuntV_2\tShuntC_2\t" +
+      "PowerCal_2\tPowerRegister_2")
 
 while True:
     if time.monotonic() - displayPreviousTime >= displayInterval:
@@ -91,9 +95,12 @@ while True:
         power_1 = ina219_1.power  # power in watts
 
         print(("{:.3f}\t{:.3f}\t{:.3f}\t{:.5f}\t{:.4f}\t{:.5f}\t{:.3f}\t{:.3f}" +
-               "\t{:.3f}\t{:.5f}\t{:.4f}\t{:.5f}\t{:.3f}").format(displayPreviousTime,
-                                                                  (bus_voltage_0 + shunt_voltage_0), bus_voltage_0, shunt_voltage_0, (current_0 / 1000),
-                                                                  (bus_voltage_0 *
-                                                                   (current_0 / 1000)), power_0,
-                                                                  (bus_voltage_1 + shunt_voltage_1), bus_voltage_1, shunt_voltage_1, (current_1 / 1000),
-                                                                  (bus_voltage_1 * (current_1 / 1000)), power_1))
+               "\t{:.3f}\t{:.5f}\t{:.4f}\t{:.5f}\t" +
+               "{:.3f}").format(displayPreviousTime,
+                                (bus_voltage_0 + shunt_voltage_0), bus_voltage_0,
+                                shunt_voltage_0, (current_0 / 1000),
+                                (bus_voltage_0 *
+                                 (current_0 / 1000)), power_0,
+                                (bus_voltage_1 + shunt_voltage_1), bus_voltage_1,
+                                shunt_voltage_1, (current_1 / 1000),
+                                (bus_voltage_1 * (current_1 / 1000)), power_1))
