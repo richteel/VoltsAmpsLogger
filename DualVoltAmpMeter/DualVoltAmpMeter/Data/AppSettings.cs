@@ -8,7 +8,6 @@ namespace DualVoltAmpMeter.Data
          * Properties 
          *********************************************************************************/
         public ChartSettings MeterChartSettings { get; set; }
-        public int MeterMaxReadings { get; set; }
         public bool OptionPanelCollapsed { get; set; }
         public int OptionPanelTabIndex { get; set; }
         public int OptionPanelSplitterDistance { get; set; }
@@ -25,7 +24,6 @@ namespace DualVoltAmpMeter.Data
         public AppSettings()
         {
             MeterChartSettings = new ChartSettings();
-            MeterMaxReadings = 2048;
             OptionPanelCollapsed = false;
             OptionPanelTabIndex = 0;
             OptionPanelSplitterDistance = 220;

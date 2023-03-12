@@ -9,6 +9,12 @@ namespace DualVoltAmpMeter.Comms
     public class MeterConnection
     {
         /*********************************************************************************
+         * Constants 
+         *********************************************************************************/
+        public const int MinMeterDataSeconds = 20;
+        public const int MaxMeterDataSeconds = 600;
+
+        /*********************************************************************************
          * Fields 
          *********************************************************************************/
         private ComPortItem _comPort;
@@ -30,7 +36,7 @@ namespace DualVoltAmpMeter.Comms
         public string ErrorMessage => _errorMessage;
         public bool MeterConnected => _meterConnected;
         public List<Reading> MeterReadings => _readings;
-        public int MeterReadingsMaxCount { get; set; }
+        public int MeterReadingsMaxSeconds { get; set; }
         public SerialPort MeterSerialPort => _serialPort;
         public string MeterVersionHardware => _meterVersionHardware;
         public string MeterVersionSoftware => _meterVersionSoftware;
@@ -155,8 +161,8 @@ namespace DualVoltAmpMeter.Comms
             try
             {
                 data = port.ReadLine().Trim();
-                Console.WriteLine("COM Port: " + _comPort.Name);
-                Console.WriteLine("Received: " + data);
+                // Console.WriteLine("COM Port: " + _comPort.Name);
+                // Console.WriteLine("Received: " + data);
             }
             catch (System.IO.IOException ex)
             {
@@ -193,6 +199,16 @@ namespace DualVoltAmpMeter.Comms
                 return;
             }
 
+            // Max certain the MeterReadingMaxSeconds is in range of MinMeterDataSeconds and MaxMeterDataSeconds
+            if(MeterReadingsMaxSeconds < MinMeterDataSeconds)
+            {
+                MeterReadingsMaxSeconds = MinMeterDataSeconds;
+            }
+            else if (MeterReadingsMaxSeconds > MaxMeterDataSeconds)
+            {
+                MeterReadingsMaxSeconds = MaxMeterDataSeconds;
+            }
+
             try
             {
                 Reading dataObj = JsonSerializer.Deserialize<Reading>(data);
@@ -203,7 +219,7 @@ namespace DualVoltAmpMeter.Comms
                 _readings.Add(dataObj);
 
                 // Limit the number of items in the ArrayList
-                while (_readings.Count > MeterReadingsMaxCount)
+                while ((DateTime.Now - _readings[0].received).TotalSeconds > MeterReadingsMaxSeconds)
                 {
                     _readings.RemoveAt(0);
                 }

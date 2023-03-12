@@ -29,7 +29,6 @@ namespace DualVoltAmpMeter
         private MeterConnection _meterConnection;
         private string _settingFile;
         private AppSettings _appSettings;
-        private int _maxMeterReadings = 2048;
         private DateTime _lastread = DateTime.MinValue;
         private DateTime _findTimeout = DateTime.MinValue;
 
@@ -159,8 +158,6 @@ namespace DualVoltAmpMeter
                 _appSettings.MeterChartSettings = meterChartSettings1.Settings;
             }
 
-            _appSettings.MeterMaxReadings = _maxMeterReadings;
-
             string json = JsonSerializer.Serialize(_appSettings);
             File.WriteAllText(_settingFile, json);
         }
@@ -229,7 +226,7 @@ namespace DualVoltAmpMeter
             foreach (ComPortItem port in ports)
             {
                 MeterConnection mConn = new MeterConnection(port) {
-                    MeterReadingsMaxCount = _maxMeterReadings
+                    MeterReadingsMaxSeconds = meterChartSettings1.Settings.DataSecondsMax
                 };
                 mConn.ConnectStatusChanged += Meter_ConnectedStatusChanged;
                 mConn.MeterInfoChanged += Meter_MeterInfoChanged;
@@ -328,7 +325,6 @@ namespace DualVoltAmpMeter
             tabControl1.SelectedIndex = _appSettings.OptionPanelTabIndex;
 
             meterChartSettings1.Settings = _appSettings.MeterChartSettings;
-            _maxMeterReadings = _appSettings.MeterMaxReadings;
 
             ChartChangeScale();
 

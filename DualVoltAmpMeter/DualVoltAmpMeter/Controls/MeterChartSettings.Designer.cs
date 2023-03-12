@@ -55,6 +55,11 @@
             this.lblAmpsMax = new System.Windows.Forms.Label();
             this.txtCurrentMax = new System.Windows.Forms.TextBox();
             this.lblCurrentMax = new System.Windows.Forms.Label();
+            this.lblMaxTimeTitle = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.lblMaxTimeUnits = new System.Windows.Forms.Label();
+            this.txtDataSecondsMax = new System.Windows.Forms.TextBox();
+            this.lblMaxTime = new System.Windows.Forms.Label();
             this.lblChartMinMaxError = new System.Windows.Forms.Label();
             this.panTimeMin.SuspendLayout();
             this.panTimeMax.SuspendLayout();
@@ -62,6 +67,7 @@
             this.panVoltageMax.SuspendLayout();
             this.panCurrentMin.SuspendLayout();
             this.panCurrentMax.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblTime
@@ -380,16 +386,74 @@
             this.lblCurrentMax.Text = "Max";
             this.lblCurrentMax.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // lblMaxTimeTitle
+            // 
+            this.lblMaxTimeTitle.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblMaxTimeTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMaxTimeTitle.Location = new System.Drawing.Point(0, 231);
+            this.lblMaxTimeTitle.Name = "lblMaxTimeTitle";
+            this.lblMaxTimeTitle.Size = new System.Drawing.Size(362, 25);
+            this.lblMaxTimeTitle.TabIndex = 14;
+            this.lblMaxTimeTitle.Text = "Data Collection Length";
+            this.lblMaxTimeTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.lblMaxTimeUnits);
+            this.panel1.Controls.Add(this.txtDataSecondsMax);
+            this.panel1.Controls.Add(this.lblMaxTime);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 256);
+            this.panel1.Name = "panel1";
+            this.panel1.Padding = new System.Windows.Forms.Padding(3);
+            this.panel1.Size = new System.Drawing.Size(362, 26);
+            this.panel1.TabIndex = 15;
+            // 
+            // lblMaxTimeUnits
+            // 
+            this.lblMaxTimeUnits.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblMaxTimeUnits.Location = new System.Drawing.Point(116, 3);
+            this.lblMaxTimeUnits.Name = "lblMaxTimeUnits";
+            this.lblMaxTimeUnits.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
+            this.lblMaxTimeUnits.Size = new System.Drawing.Size(243, 20);
+            this.lblMaxTimeUnits.TabIndex = 4;
+            this.lblMaxTimeUnits.Text = "Seconds";
+            this.lblMaxTimeUnits.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // txtDataSecondsMax
+            // 
+            this.txtDataSecondsMax.Dock = System.Windows.Forms.DockStyle.Left;
+            this.txtDataSecondsMax.Location = new System.Drawing.Point(56, 3);
+            this.txtDataSecondsMax.Name = "txtDataSecondsMax";
+            this.txtDataSecondsMax.Size = new System.Drawing.Size(60, 20);
+            this.txtDataSecondsMax.TabIndex = 1;
+            this.txtDataSecondsMax.Tag = "Data Seconds";
+            this.txtDataSecondsMax.Text = "0";
+            this.txtDataSecondsMax.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtDataSecondsMax.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtChartSetting_KeyPress);
+            this.txtDataSecondsMax.Validating += new System.ComponentModel.CancelEventHandler(this.TxtChartSetting_Validating);
+            // 
+            // lblMaxTime
+            // 
+            this.lblMaxTime.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblMaxTime.Location = new System.Drawing.Point(3, 3);
+            this.lblMaxTime.Name = "lblMaxTime";
+            this.lblMaxTime.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
+            this.lblMaxTime.Size = new System.Drawing.Size(53, 20);
+            this.lblMaxTime.TabIndex = 0;
+            this.lblMaxTime.Text = "Max";
+            this.lblMaxTime.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // lblChartMinMaxError
             // 
             this.lblChartMinMaxError.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblChartMinMaxError.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblChartMinMaxError.ForeColor = System.Drawing.Color.Red;
-            this.lblChartMinMaxError.Location = new System.Drawing.Point(0, 231);
+            this.lblChartMinMaxError.Location = new System.Drawing.Point(0, 282);
             this.lblChartMinMaxError.Name = "lblChartMinMaxError";
             this.lblChartMinMaxError.Padding = new System.Windows.Forms.Padding(3);
-            this.lblChartMinMaxError.Size = new System.Drawing.Size(362, 89);
-            this.lblChartMinMaxError.TabIndex = 13;
+            this.lblChartMinMaxError.Size = new System.Drawing.Size(362, 38);
+            this.lblChartMinMaxError.TabIndex = 16;
             this.lblChartMinMaxError.Text = "ERROR: Enter numeric value for: {0}";
             this.lblChartMinMaxError.Visible = false;
             // 
@@ -398,6 +462,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.lblChartMinMaxError);
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.lblMaxTimeTitle);
             this.Controls.Add(this.panCurrentMax);
             this.Controls.Add(this.panCurrentMin);
             this.Controls.Add(this.lblCurrent);
@@ -421,6 +487,8 @@
             this.panCurrentMin.PerformLayout();
             this.panCurrentMax.ResumeLayout(false);
             this.panCurrentMax.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -454,6 +522,11 @@
         private System.Windows.Forms.Label lblAmpsMax;
         private System.Windows.Forms.TextBox txtCurrentMax;
         private System.Windows.Forms.Label lblCurrentMax;
+        private System.Windows.Forms.Label lblMaxTimeTitle;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label lblMaxTimeUnits;
+        private System.Windows.Forms.TextBox txtDataSecondsMax;
+        private System.Windows.Forms.Label lblMaxTime;
         private System.Windows.Forms.Label lblChartMinMaxError;
     }
 }

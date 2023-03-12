@@ -235,10 +235,10 @@ while True:
 
         data = ""
         if output_json:
-            data = json.dumps({"time": displayPreviousTime,
+            data = json.dumps({"time": powerPreviousTime,
                               "channel_1": meter_0, "channel_2": meter_1})
         else:
-            data = delformat.format(displayPreviousTime,
+            data = delformat.format(powerPreviousTime,
                                     meter_0["VIN_IN"], meter_0["VIN_OUT"],
                                     meter_0["ShuntV"],
                                     meter_0["ShuntC"], meter_0["PowerCal"],

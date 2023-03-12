@@ -1,4 +1,6 @@
-﻿namespace DualVoltAmpMeter.Data
+﻿using DualVoltAmpMeter.Comms;
+
+namespace DualVoltAmpMeter.Data
 {
     public class ChartSettings
     {
@@ -11,6 +13,7 @@
         public double VoltageMax { get; set; }
         public double CurrentMin { get; set; }
         public double CurrentMax { get; set; }
+        public int DataSecondsMax { get; set; }
 
 
         /*********************************************************************************
@@ -23,6 +26,7 @@
             VoltageMax = 10;
             CurrentMin = 0;
             CurrentMax = 1;
+            DataSecondsMax = 120;
         }
 
         public bool Validate()
@@ -32,6 +36,8 @@
             if (TimeMin > TimeMax) { isvalid = false; }
             if (VoltageMin > VoltageMax) { isvalid = false; }
             if (CurrentMin > CurrentMax) { isvalid = false; }
+            if (DataSecondsMax < MeterConnection.MinMeterDataSeconds) { isvalid = false; }
+            if (DataSecondsMax > MeterConnection.MaxMeterDataSeconds) { isvalid = false; }
 
             return isvalid;
         }
