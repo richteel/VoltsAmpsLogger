@@ -324,6 +324,10 @@ namespace DualVoltAmpMeter
             splitContainer1.SplitterDistance = _appSettings.OptionPanelSplitterDistance;
             tabControl1.SelectedIndex = _appSettings.OptionPanelTabIndex;
 
+            if(splitContainer1.Panel1Collapsed) {
+                cmdHideShow.Text = ">";
+            }
+
             meterChartSettings1.Settings = _appSettings.MeterChartSettings;
 
             ChartChangeScale();
@@ -555,7 +559,8 @@ namespace DualVoltAmpMeter
             // Find stating data point index
             for (int pointIdx = _meterConnection.MeterReadings.Count - 1; pointIdx > 0; pointIdx--)
             {
-                if (pointIdx < _meterConnection.MeterReadings.Count && _meterConnection.MeterReadings[pointIdx].received <= minTime)
+                if (pointIdx < _meterConnection.MeterReadings.Count && _meterConnection.MeterReadings[pointIdx] != null && 
+                    _meterConnection.MeterReadings[pointIdx].received <= minTime)
                 {
                     startDataIndex = pointIdx;
                     break;
@@ -570,17 +575,26 @@ namespace DualVoltAmpMeter
             {
                 Reading nextReading = _meterConnection.MeterReadings[i];
 
-                double secondsValue = (nextReading.received - DateTime.Now).TotalSeconds;
-                channel1Volts.Points.AddXY(secondsValue, nextReading.channel_1.VIN_OUT);
-                channel1Current.Points.AddXY(secondsValue, nextReading.channel_1.ShuntC);
-                channel2Volts.Points.AddXY(secondsValue, nextReading.channel_2.VIN_OUT);
-                channel2Current.Points.AddXY(secondsValue, nextReading.channel_2.ShuntC);
+                if (nextReading != null && nextReading.channel_1 != null && nextReading.channel_2 != null)
+                {
+
+                    double secondsValue = (nextReading.received - DateTime.Now).TotalSeconds;
+                    channel1Volts.Points.AddXY(secondsValue, nextReading.channel_1.VIN_OUT);
+                    channel1Current.Points.AddXY(secondsValue, nextReading.channel_1.ShuntC);
+                    channel2Volts.Points.AddXY(secondsValue, nextReading.channel_2.VIN_OUT);
+                    channel2Current.Points.AddXY(secondsValue, nextReading.channel_2.ShuntC);
+                }
             }
 
-            meterChannel1.Update(_meterConnection.MeterReadings[_meterConnection.MeterReadings.Count - 1].channel_1);
-            meterChannel2.Update(_meterConnection.MeterReadings[_meterConnection.MeterReadings.Count - 1].channel_2);
+            if (_meterConnection.MeterReadings[_meterConnection.MeterReadings.Count - 1] != null &&
+                _meterConnection.MeterReadings[_meterConnection.MeterReadings.Count - 1].channel_1 != null &&
+                _meterConnection.MeterReadings[_meterConnection.MeterReadings.Count - 1].channel_2 != null)
+            {
+                meterChannel1.Update(_meterConnection.MeterReadings[_meterConnection.MeterReadings.Count - 1].channel_1);
+                meterChannel2.Update(_meterConnection.MeterReadings[_meterConnection.MeterReadings.Count - 1].channel_2);
 
-            _lastread = _meterConnection.MeterReadings[_meterConnection.MeterReadings.Count - 1].received;
+                _lastread = _meterConnection.MeterReadings[_meterConnection.MeterReadings.Count - 1].received;
+            }
 
             // If no reading have been received in 10 seconds, then assume that the meter has been unplugged,
             // so start looking for it again.
