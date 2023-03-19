@@ -617,15 +617,20 @@ namespace DualVoltAmpMeter
                 }
             }
 
-            if (_meterConnection.MeterReadings != null &&
-                _meterConnection.MeterReadings[_meterConnection.MeterReadings.Count - 1] != null &&
-                _meterConnection.MeterReadings[_meterConnection.MeterReadings.Count - 1].channel_1 != null &&
-                _meterConnection.MeterReadings[_meterConnection.MeterReadings.Count - 1].channel_2 != null)
+            if (_meterConnection.MeterReadings != null)
             {
-                meterChannel1.Update(_meterConnection.MeterReadings[_meterConnection.MeterReadings.Count - 1].channel_1);
-                meterChannel2.Update(_meterConnection.MeterReadings[_meterConnection.MeterReadings.Count - 1].channel_2);
+                int maxReadingIndex = _meterConnection.MeterReadings.Count - 1;
 
-                _lastread = _meterConnection.MeterReadings[_meterConnection.MeterReadings.Count - 1].received;
+                if (maxReadingIndex >= 0 &&
+                    _meterConnection.MeterReadings[maxReadingIndex] != null &&
+                    _meterConnection.MeterReadings[maxReadingIndex].channel_1 != null &&
+                    _meterConnection.MeterReadings[maxReadingIndex].channel_2 != null)
+                {
+                    meterChannel1.Update(_meterConnection.MeterReadings[maxReadingIndex].channel_1);
+                    meterChannel2.Update(_meterConnection.MeterReadings[maxReadingIndex].channel_2);
+
+                    _lastread = _meterConnection.MeterReadings[maxReadingIndex].received;
+                }
             }
 
             timerUiUpdate.Enabled = true;
