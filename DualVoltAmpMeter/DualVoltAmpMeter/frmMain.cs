@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Text.Json;
 using System.Windows.Forms.DataVisualization.Charting;
+using DualVoltAmpMeter.Controls;
 
 namespace DualVoltAmpMeter
 {
@@ -162,6 +163,33 @@ namespace DualVoltAmpMeter
             File.WriteAllText(_settingFile, json);
         }
 
+        private void TrimReceivedData()
+        {
+            // If there is no data, return
+            if (_meterConnection == null || _meterConnection.MeterReadings == null || _meterConnection.MeterReadings.Count == 0)
+            {
+                return;
+            }
+
+            int maxSeconds = meterChartSettings1.Settings.DataSecondsMax;
+
+            // Max certain the MeterReadingMaxSeconds is in range of MinMeterDataSeconds and MaxMeterDataSeconds
+            if (maxSeconds < MeterChartSettings.MinMeterDataSeconds)
+            {
+                maxSeconds = MeterChartSettings.MinMeterDataSeconds;
+            }
+            else if (maxSeconds > MeterChartSettings.MaxMeterDataSeconds)
+            {
+                maxSeconds = MeterChartSettings.MaxMeterDataSeconds;
+            }
+
+            // Limit the number of items in the ArrayList
+            while ((DateTime.Now - _meterConnection.MeterReadings[0].received).TotalSeconds > maxSeconds)
+            {
+                _meterConnection.MeterReadings.RemoveAt(0);
+            }
+        }
+
         private void UpdateMeterConnectionInfo()
         {
             meterInfo1.UpdateInfo(_meterConnection);
@@ -225,9 +253,7 @@ namespace DualVoltAmpMeter
 
             foreach (ComPortItem port in ports)
             {
-                MeterConnection mConn = new MeterConnection(port) {
-                    MeterReadingsMaxSeconds = meterChartSettings1.Settings.DataSecondsMax
-                };
+                MeterConnection mConn = new MeterConnection(port);
                 mConn.ConnectStatusChanged += Meter_ConnectedStatusChanged;
                 mConn.MeterInfoChanged += Meter_MeterInfoChanged;
 
@@ -543,6 +569,11 @@ namespace DualVoltAmpMeter
                 return;
             }
 
+            timerUiUpdate.Enabled = false;
+
+            // Trim the readings to max seconds of data
+            TrimReceivedData();
+
             // Add points to the chart control
             ChartArea ca = chart1.ChartAreas[0];
             Series channel1Volts = chart1.Series[VOLTAGE_1_SERIES_INDEX];
@@ -557,9 +588,9 @@ namespace DualVoltAmpMeter
             int startDataIndex = 0;
 
             // Find stating data point index
-            for (int pointIdx = _meterConnection.MeterReadings.Count - 1; pointIdx > 0; pointIdx--)
+            for (int pointIdx = _meterConnection.MeterReadings.Count - 1; pointIdx >= 0; pointIdx--)
             {
-                if (pointIdx < _meterConnection.MeterReadings.Count && _meterConnection.MeterReadings[pointIdx] != null && 
+                if (_meterConnection.MeterReadings[pointIdx] != null &&
                     _meterConnection.MeterReadings[pointIdx].received <= minTime)
                 {
                     startDataIndex = pointIdx;
@@ -586,7 +617,8 @@ namespace DualVoltAmpMeter
                 }
             }
 
-            if (_meterConnection.MeterReadings[_meterConnection.MeterReadings.Count - 1] != null &&
+            if (_meterConnection.MeterReadings != null &&
+                _meterConnection.MeterReadings[_meterConnection.MeterReadings.Count - 1] != null &&
                 _meterConnection.MeterReadings[_meterConnection.MeterReadings.Count - 1].channel_1 != null &&
                 _meterConnection.MeterReadings[_meterConnection.MeterReadings.Count - 1].channel_2 != null)
             {
@@ -595,6 +627,8 @@ namespace DualVoltAmpMeter
 
                 _lastread = _meterConnection.MeterReadings[_meterConnection.MeterReadings.Count - 1].received;
             }
+
+            timerUiUpdate.Enabled = true;
 
             // If no reading have been received in 10 seconds, then assume that the meter has been unplugged,
             // so start looking for it again.

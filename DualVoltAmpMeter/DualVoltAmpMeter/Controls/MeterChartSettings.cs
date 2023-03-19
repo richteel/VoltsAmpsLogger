@@ -9,6 +9,12 @@ namespace DualVoltAmpMeter.Controls
 {
     public partial class MeterChartSettings : UserControl
     {
+        /*********************************************************************************
+         * Constants 
+         *********************************************************************************/
+        public const int MinMeterDataSeconds = 20;
+        public const int MaxMeterDataSeconds = 600;
+
         public ChartSettings Settings
         {
             get
@@ -90,14 +96,14 @@ namespace DualVoltAmpMeter.Controls
             else if (dataSeconds)
             {
                 lblChartMinMaxError.Text = string.Format("ERROR: Max must be between: {0} and {1}",
-                    MeterConnection.MinMeterDataSeconds, MeterConnection.MaxMeterDataSeconds);
+                    MinMeterDataSeconds, MaxMeterDataSeconds);
                 min = double.Parse(txtBox.Text);
-                max = MeterConnection.MaxMeterDataSeconds;
+                max = MaxMeterDataSeconds;
 
-                if (min < MeterConnection.MinMeterDataSeconds)
+                if (min < MinMeterDataSeconds)
                 {
                     max = min;
-                    min = MeterConnection.MinMeterDataSeconds;
+                    min = MinMeterDataSeconds;
                 }
             }
             else

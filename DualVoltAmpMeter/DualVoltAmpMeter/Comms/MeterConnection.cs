@@ -9,12 +9,6 @@ namespace DualVoltAmpMeter.Comms
     public class MeterConnection
     {
         /*********************************************************************************
-         * Constants 
-         *********************************************************************************/
-        public const int MinMeterDataSeconds = 20;
-        public const int MaxMeterDataSeconds = 600;
-
-        /*********************************************************************************
          * Fields 
          *********************************************************************************/
         private ComPortItem _comPort;
@@ -36,7 +30,6 @@ namespace DualVoltAmpMeter.Comms
         public string ErrorMessage => _errorMessage;
         public bool MeterConnected => _meterConnected;
         public List<Reading> MeterReadings => _readings;
-        public int MeterReadingsMaxSeconds { get; set; }
         public SerialPort MeterSerialPort => _serialPort;
         public string MeterVersionHardware => _meterVersionHardware;
         public string MeterVersionSoftware => _meterVersionSoftware;
@@ -199,16 +192,6 @@ namespace DualVoltAmpMeter.Comms
                 return;
             }
 
-            // Max certain the MeterReadingMaxSeconds is in range of MinMeterDataSeconds and MaxMeterDataSeconds
-            if(MeterReadingsMaxSeconds < MinMeterDataSeconds)
-            {
-                MeterReadingsMaxSeconds = MinMeterDataSeconds;
-            }
-            else if (MeterReadingsMaxSeconds > MaxMeterDataSeconds)
-            {
-                MeterReadingsMaxSeconds = MaxMeterDataSeconds;
-            }
-
             try
             {
                 Reading dataObj = JsonSerializer.Deserialize<Reading>(data);
@@ -217,12 +200,6 @@ namespace DualVoltAmpMeter.Comms
 
                 dataObj.received = DateTime.Now;
                 _readings.Add(dataObj);
-
-                // Limit the number of items in the ArrayList
-                while ((DateTime.Now - _readings[0].received).TotalSeconds > MeterReadingsMaxSeconds)
-                {
-                    _readings.RemoveAt(0);
-                }
             }
             catch (Exception ex)
             {

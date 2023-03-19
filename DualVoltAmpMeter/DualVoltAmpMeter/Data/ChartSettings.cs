@@ -1,4 +1,5 @@
 ﻿using DualVoltAmpMeter.Comms;
+using DualVoltAmpMeter.Controls;
 
 namespace DualVoltAmpMeter.Data
 {
@@ -36,8 +37,8 @@ namespace DualVoltAmpMeter.Data
             if (TimeMin > TimeMax) { isvalid = false; }
             if (VoltageMin > VoltageMax) { isvalid = false; }
             if (CurrentMin > CurrentMax) { isvalid = false; }
-            if (DataSecondsMax < MeterConnection.MinMeterDataSeconds) { isvalid = false; }
-            if (DataSecondsMax > MeterConnection.MaxMeterDataSeconds) { isvalid = false; }
+            if (DataSecondsMax < MeterChartSettings.MinMeterDataSeconds) { isvalid = false; }
+            if (DataSecondsMax > MeterChartSettings.MaxMeterDataSeconds) { isvalid = false; }
 
             return isvalid;
         }
