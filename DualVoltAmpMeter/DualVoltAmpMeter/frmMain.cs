@@ -524,9 +524,9 @@ namespace DualVoltAmpMeter
                     _meterConnection = conn;
                     Console.WriteLine("frmMain - Found meter on " + conn.ComPort.Name);
                 }
-                else
+                else if(_meterConnection == null)
                 {
-                    conn.Dispose();
+                    conn.CheckIfMeterIsConnected();
                 }
             }
 
@@ -537,6 +537,14 @@ namespace DualVoltAmpMeter
             }
 
             Console.WriteLine("Clearing Connections");
+
+            foreach (MeterConnection conn in _meterConnections)
+            {
+                if (_meterConnection == null || conn != _meterConnection)
+                {
+                    conn.Dispose();
+                }
+            }
             _meterConnections.Clear();
 
             if (_meterConnection == null)
